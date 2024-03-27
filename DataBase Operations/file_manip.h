@@ -11,17 +11,20 @@
 
 FILE *openCsvFile(const char *filePath, const char *mode);
 
+
+
 void addAccountToDb(struct Account* temp);
 
 void addUserToDb(struct User* temp);
 
-//FREEING TOKEN IN THIS FUNCTION YIELSD ERROR?
+
 
 bool isUserInDb(char*name, char*surname);
-
 
 bool isIbanInDb(char *IBan);
 
 
+//TEMPORARY STORED HERE
+bool isNameValid(const char *name);
 
 #endif //PROGRAMING_PROJECT_FILE_MANIP_H

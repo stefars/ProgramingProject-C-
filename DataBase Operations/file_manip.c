@@ -4,7 +4,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "Structure Operations/struct.h"
+#include "../Structure Operations/structures.h"
+#include "../Structure Operations/Generative Algorithms/generate.h"
 
 FILE *openCsvFile(const char *filePath, const char *mode){
 
@@ -20,9 +21,10 @@ FILE *openCsvFile(const char *filePath, const char *mode){
 }
 
 
+
 void addAccountToDb(struct Account* temp){
     FILE *file_pointer;
-    file_pointer = openCsvFile("..\\Accounts.csv", "a");
+    file_pointer = openCsvFile("..\\Data Base\\Accounts.csv", "a");
 
     fprintf(file_pointer,"%s,%s,%s,%lu\n",temp->IBan ,temp->id_user, temp->coin, *temp->amount);
 
@@ -32,7 +34,7 @@ void addAccountToDb(struct Account* temp){
 
 void addUserToDb(struct User* temp){
     FILE *file_pointer;
-    file_pointer = openCsvFile("E:\\Uni C_C++\\C\\CLion\\Programing Project\\Users.csv", "a");
+    file_pointer = openCsvFile("..\\Users.csv", "a");
 
     fprintf(file_pointer,"%s,%s,%s\n", temp->id, temp->name, temp->surname);
 
@@ -40,6 +42,7 @@ void addUserToDb(struct User* temp){
 
 
 }
+
 
 
 bool isUserInDb(char*name, char*surname){
@@ -59,7 +62,7 @@ bool isUserInDb(char*name, char*surname){
 
 
     FILE *file_pointer;
-    file_pointer = openCsvFile("..\\Users.csv", "r");
+    file_pointer = openCsvFile("..\\Data Base\\Users.csv", "r");
 
 
     while(feof(file_pointer) == 0){
@@ -86,7 +89,6 @@ bool isUserInDb(char*name, char*surname){
 
 }
 
-
 bool isIbanInDb(char *IBan){
 
     char *token;
@@ -101,7 +103,7 @@ bool isIbanInDb(char *IBan){
     }
 
     FILE *file_pointer;
-    file_pointer = openCsvFile("..\\Accounts.csv","r");
+    file_pointer = openCsvFile("..\\Data Base\\Accounts.csv","r");
 
 
     while(feof(file_pointer)==0){
@@ -125,4 +127,18 @@ bool isIbanInDb(char *IBan){
     return 0;
 }
 
+//TEMPORARY STORED HERE
+bool isNameValid(const char *name){
+    int i = 0;
+    while(*(i+name)) {
+
+        //Check if char is a letter
+        if ((*(i+name)<'A')||(*(i+name)>'z')||(((*(i+name)>'Z') && (*(i+name)<'a')))){
+            return 0;
+        }
+        i++;
+    }
+    return 1;
+
+}
 

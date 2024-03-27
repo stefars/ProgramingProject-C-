@@ -3,6 +3,7 @@
 //
 #include <stdio.h>
 #include <stdlib.h>
+#include "../Structure Operations/structures.h"
 
 void printLoginInterface(){
     printf( "_*__*__*___*B_A_N_K*__*__*__*__*_\n"
@@ -21,7 +22,6 @@ void printLoginInterface(){
     );
 }
 
-
 void printMenuInterface(const char *name,const char *surname){
 
     printf("_*__*__*___*B_A_N_K*__*__*__*__*_\n"
@@ -38,13 +38,11 @@ void printMenuInterface(const char *name,const char *surname){
            "    [6] Log Out\n",name,surname);
 }
 
-
 void printShowAccountsInterface(const char *name,const char *surname){
 
     printf("_*__*__*___*B_A_N_K*__*__*__*__*_\n"
     );
 }
-
 
 void printAddAccountInterface(){
 
@@ -55,13 +53,16 @@ void printAddAccountInterface(){
 }
 
 
+
 void optionsMenuInterface(short choice){
 
     switch(choice){
         case 2: printAddAccountInterface();
+            break;
         case 6: printf("Logging out...\n");
             exit(0);
         default: printf("Invalid choice\n");
+            break;
 
 
     }

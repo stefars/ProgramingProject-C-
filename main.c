@@ -7,65 +7,6 @@
 #include "UI/UI.h"
 
 
-void createNewUser(char* name, char* surname){
-
-    struct User *New_User;
-    struct Account *New_Account;
-
-    //Generate new instances
-    New_User = createUserInstance(name, surname);
-
-    while(1){
-        New_Account = createAccountInstance(New_User->id);
-        if(isIbanInDb(New_Account->IBan)){
-            freeAccount(New_Account);
-            continue;
-        }
-        break;
-    }
-
-
-
-
-    //Update files
-    addUserToDb(New_User);
-    addAccountToDb(New_Account);
-
-    freeAccount(New_Account);
-    freeUser(New_User);
-
-}
-
-void createUserAccount(char *user_id){
-    struct Account *New_Account;
-
-    New_Account = createAccountInstance(user_id);
-
-    addAccountToDb(New_Account);
-
-    freeAccount(New_Account);
-    //Free Amount also?
-}
-
-
-
-
-
-bool isNameValid(const char *name){
-    int i = 0;
-    while(*(i+name)) {
-
-        //Check if char is a letter
-        if ((*(i+name)<'A')||(*(i+name)>'z')||(((*(i+name)>'Z') && (*(i+name)<'a')))){
-            return 0;
-        }
-        i++;
-    }
-return 1;
-
-}
-
-
 
 int main() {
 
@@ -90,6 +31,15 @@ int main() {
         printf("You are trying to login\n");
 
         if (isUserInDb(name, surname) == 1) {
+
+            //FETCH DATA
+
+            //CREATE USER STRUCT
+
+            // STORE ACCOUNT STRUCTS IN LIST
+
+
+
            printMenuInterface(name,surname);
            scanf("%hd",&choice);
            optionsMenuInterface(choice);

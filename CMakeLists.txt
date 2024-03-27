@@ -11,4 +11,6 @@ add_executable(Programing_Project main.c
         "DataBase Operations/file_manip.c"
         "Structure Operations/strucutres.c"
         "Structure Operations/struct.h"
+        "Structure Operations/Generative Algorithms/generate.h"
+        "Structure Operations/Generative Algorithms/generate.c"
 )

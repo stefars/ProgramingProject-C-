@@ -13,13 +13,13 @@ void freeUser(struct User *User);
 
 void freeAccount(struct Account *Account);
 
-char *generateUserId(char* name, char* surname);
-
-char *generateIBan();
-
 struct Account *createAccountInstance(char* id);
 
 struct User *createUserInstance(char* name, char* surname);
 
+void createUserAccount(char *user_id);
+
+
+void createNewUser(char* name, char* surname);
 
 #endif //PROGRAMING_PROJECT_STRUCTURES_H
