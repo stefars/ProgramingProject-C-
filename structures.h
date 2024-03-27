@@ -5,10 +5,42 @@
 #ifndef PROGRAMING_PROJECT_STRUCTURES_H
 #define PROGRAMING_PROJECT_STRUCTURES_H
 #include <stdlib.h>
+#include <string.h>
 #include <time.h>
 
 //Find new place for these?
-char *generate_user_id(char* name,char* surname){
+struct User {
+    char* id;
+    char* name;
+    char* surname;
+    int nr_accounts;   //REMEMBER THIS
+};
+
+struct Account {
+    char* IBan;
+    char* id_user;
+    char* coin;
+    unsigned long *amount;
+
+};
+
+void freeUser(struct User *User){
+    free(User->surname);
+    free(User->name);
+    free(User->id);
+    free(User);
+
+}
+
+void freeAccount(struct Account *Account){
+    free(Account->IBan);
+    free(Account->id_user);
+    free(Account->coin);
+    free(Account);
+
+}
+
+char *generateUserId(char* name, char* surname){
 
     char *to_generate,*seed;
 
@@ -27,6 +59,7 @@ char *generate_user_id(char* name,char* surname){
     int x = (int) strlen(to_generate);
 
     seed = (char*)malloc(sizeof(char)*(x+1));
+
     if (seed == NULL){
         printf("Couldn't find space in memory\n");
         free(to_generate);
@@ -44,6 +77,7 @@ char *generate_user_id(char* name,char* surname){
 
 
     free(to_generate);
+
     return seed;
 
 
@@ -51,7 +85,7 @@ char *generate_user_id(char* name,char* surname){
 
 }
 
-char *generate_IBan(){
+char *generateIBan(){
 
     int sum = 0;
     char IBan_rule_number;
@@ -71,6 +105,13 @@ char *generate_IBan(){
         return NULL;  //Error code
     }
 
+    IBan = (char*)malloc(sizeof(char)*16);
+    if (IBan == NULL){
+        printf("Couldn't find space in memory\n");
+        return NULL;  //Error code
+    }
+
+    //Generating IBAN
 
     time_t t;
     srand((unsigned long long) (&t));
@@ -102,13 +143,14 @@ char *generate_IBan(){
 
     sprintf(&IBan_rule_number,"%d",IBan_rule_number);
 
-    IBan = (char*)malloc(sizeof(char)*16);
+
     strcpy(IBan,&IBan_rule_number);
     strcpy(IBan+1,"BANK");
     strcpy(IBan+5,IBan_random_letters);
     strcpy(IBan+10,IBan_control_numbers);
 
     *(IBan+16) = '\0';
+
 
 
     free(IBan_control_numbers);
@@ -118,53 +160,41 @@ char *generate_IBan(){
 
 }
 
+struct Account *createAccountInstance(char* id){
 
+    struct Account *temp;
 
-struct User {
-    char* id;
-    char* name;
-    char* surname;
-    int nr_accounts;
-};
+    temp = (struct Account*)malloc(sizeof(struct Account));
 
-struct Account {
-    char* IBan;
-    char* id_user;
-    char* coin;
-    unsigned long amount;
+    temp->IBan = generateIBan();
+    temp->id_user = (char*)malloc(sizeof(char)*strlen(id));
+    temp->coin = (char*)malloc(sizeof(char));
 
-};
-
-struct Account Create_Account_Instance(char* id){
-
-    struct Account temp;
-
-    temp.IBan = generate_IBan();
-    temp.id_user = (char*)malloc(sizeof(char)*strlen(id));
-    temp.coin = (char*)malloc(sizeof(char));
-
-    strcpy(temp.id_user,id);
-    strcpy(temp.coin,"R");
-    temp.amount = 0;
+    strcpy(temp->id_user,id);
+    strcpy(temp->coin,"R");
+    temp->amount = 0;
 
     return temp;
 };
 
-struct User Create_User_Instance(char* name, char* surname){
+struct User *createUserInstance(char* name, char* surname){
 
-    struct User temp;
+    struct User *temp;
 
-    temp.id = generate_user_id(name,surname);
-    temp.name = (char*)malloc(sizeof(char)*strlen(name)+1);
-    temp.surname = (char*)malloc(sizeof(char)*strlen(surname)+1);
+    temp = (struct User*)malloc(sizeof(struct User));
 
-    strcpy(temp.name,name);
-    strcpy(temp.surname,surname);
-    temp.nr_accounts = 1;
+    temp->id = generateUserId(name, surname);
+    temp->name = (char*)malloc(sizeof(char)*strlen(name)+1);
+    temp->surname = (char*)malloc(sizeof(char)*strlen(surname)+1);
+
+    strcpy(temp->name,name);
+    strcpy(temp->surname,surname);
+    temp->nr_accounts = 1;
 
 
     return temp;
 };
+
 
 
 #endif //PROGRAMING_PROJECT_STRUCTURES_H

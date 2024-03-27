@@ -6,4 +6,5 @@ set(CMAKE_C_STANDARD 23)
 add_executable(Programing_Project main.c
         structures.h
         file_manip.h
-        UI.h)
+        UI.h
+)

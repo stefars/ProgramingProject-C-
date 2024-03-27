@@ -4,52 +4,120 @@
 #include "structures.h"
 #include "file_manip.h"
 #include <time.h>
-#include <conio.h>
-
-//FIX THIS
+#include "UI.h"
 
 
-void Init_New_User(){
-    char x[100],y[100];
-    scanf("%s",x);
-    scanf("%s",y);
+void createNewUser(char* name, char* surname){
 
-    struct User New_User;
-    struct Account New_Account;
+    struct User *New_User;
+    struct Account *New_Account;
 
     //Generate new instances
-    New_User = Create_User_Instance(x, y);
-    New_Account = Create_Account_Instance(New_User.id);
+    New_User = createUserInstance(name, surname);
+
+    while(1){
+        New_Account = createAccountInstance(New_User->id);
+        if(isIbanInDb(New_Account->IBan)){
+            freeAccount(New_Account);
+            continue;
+        }
+        break;
+    }
+
+
+
 
     //Update files
-    Add_User_To_DB(&New_User);
-    Add_Account_To_DB(&New_Account);
+    addUserToDb(New_User);
+    addAccountToDb(New_Account);
+
+    freeAccount(New_Account);
+    freeUser(New_User);
 
 }
 
-void Create_Account_For_User(char *){
+void createUserAccount(char *user_id){
+    struct Account *New_Account;
+
+    New_Account = createAccountInstance(user_id);
+
+    addAccountToDb(New_Account);
+
+    freeAccount(New_Account);
+    //Free Amount also?
+}
 
 
+
+
+
+bool isNameValid(const char *name){
+    int i = 0;
+    while(*(i+name)) {
+
+        //Check if char is a letter
+        if ((*(i+name)<'A')||(*(i+name)>'z')||(((*(i+name)>'Z') && (*(i+name)<'a')))){
+            return 0;
+        }
+        i++;
+    }
+return 1;
 
 }
+
+
 
 int main() {
 
-    while (1) {
-        char x;
+
+    char opcode[10], name[50], surname[50];
+
+    short choice;
+
+    printLoginInterface();
 
 
+    scanf("%s %s %s", opcode, name, surname);
 
-
-        scanf("%c", &x);
-
-        if (x == *"Y") {
-            system("cls");
-            printf("yes");
-
-        }
+    if(!(isNameValid(name) && isNameValid(surname))){
+        printf("Invalid credentials. Make sure you are using ASCII letters.\n");
+        return 0;
     }
-    return 0;
 
+
+ //Make a function for these
+    if (strcmp(opcode, "login") == 0) {
+        printf("You are trying to login\n");
+
+        if (isUserInDb(name, surname) == 1) {
+           printMenuInterface(name,surname);
+           scanf("%hd",&choice);
+           optionsMenuInterface(choice);
+
+        } else {
+            printf("User not found");
+            return 0;
+        }
+
+        return 0;
+    }
+
+
+
+
+
+    if (strcmp(opcode, "register") == 0) {
+        printf("You are making a new user\n");
+        createNewUser(name,surname);
+
+
+    }
+    else{
+        printf("Invalid command, please try again.");
+
+    }
 
 }
+
+
+
