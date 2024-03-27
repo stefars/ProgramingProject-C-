@@ -4,7 +4,11 @@ project(Programing_Project C)
 set(CMAKE_C_STANDARD 23)
 
 add_executable(Programing_Project main.c
-        structures.h
-        file_manip.h
-        UI.h
+        "Structure Operations/structures.h"
+        "DataBase Operations/file_manip.h"
+        UI/UI.h
+        UI/UI.c
+        "DataBase Operations/file_manip.c"
+        "Structure Operations/strucutres.c"
+        "Structure Operations/struct.h"
 )

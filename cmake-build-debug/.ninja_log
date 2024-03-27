@@ -1,0 +1,7 @@
+# ninja log v5
+1	93	7332676532073827	build.ninja	5a774a9ee71f4b67
+3	56	7332672062326738	CMakeFiles/Programing_Project.dir/UI/UI.c.obj	57bce89887b878bb
+1	61	7332672062381812	CMakeFiles/Programing_Project.dir/DataBase_Operations/file_manip.c.obj	dd119229fabcb465
+6	61	7332672062381812	CMakeFiles/Programing_Project.dir/main.c.obj	e15862b232f19181
+4	56	7332677294672459	CMakeFiles/Programing_Project.dir/main.c.obj	e15862b232f19181
+7	57	7332677294686354	CMakeFiles/Programing_Project.dir/Structure_Operations/strucutres.c.obj	8b51b1d91fe5af11

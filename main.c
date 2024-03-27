@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "structures.h"
-#include "file_manip.h"
+#include "Structure Operations/structures.h"
+#include "DataBase Operations/file_manip.h"
 #include <time.h>
-#include "UI.h"
+#include "UI/UI.h"
 
 
 void createNewUser(char* name, char* surname){
