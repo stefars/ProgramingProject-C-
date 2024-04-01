@@ -15,7 +15,11 @@ void printShowAccountsInterface(const char *name,const char *surname);
 
 void printAddAccountInterface();
 
-void optionsMenuInterface(short choice);
+void printAddAccountInterfaceSuccessful();
+
+void printAddAccountInterfaceFailed(char code[3]);
+
+void optionsMenuInterface(char choice);
 
 
 #endif //PROGRAMING_PROJECT_UI_H

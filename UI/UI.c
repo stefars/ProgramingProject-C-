@@ -49,17 +49,34 @@ void printAddAccountInterface(){
     printf("_*__*__*___*B_A_N_K*__*__*__*__*_\n"
            "          \n"
            "   Creating Default Account... \n"
-           "\n""\n""--------------------------------------");
+           "\n""\n""--------------------------------------\n");
+}
+
+
+void printAddAccountInterfaceSuccessful(){
+    printf("_*__*__*___*B_A_N_K*__*__*__*__*_\n"
+           "          \n"
+           "   Account created successfully! \n"
+           "\n""\n""--------------------------------------\n");
+}
+
+
+void printAddAccountInterfaceFailed(char code[3]){
+    printf("_*__*__*___*B_A_N_K*__*__*__*__*_\n"
+           "          \n"
+           "   Couldn't create account. Error code %s \n"
+           "\n""\n""--------------------------------------\n",code);
 }
 
 
 
-void optionsMenuInterface(short choice){
+
+void optionsMenuInterface(char choice){
 
     switch(choice){
-        case 2: printAddAccountInterface();
+        case '2': printAddAccountInterface();
             break;
-        case 6: printf("Logging out...\n");
+        case '6': printf("Logging out...\n");
             exit(0);
         default: printf("Invalid choice\n");
             break;

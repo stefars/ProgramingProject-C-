@@ -42,7 +42,6 @@ char *generateUserId(char* name, char* surname){
 
     *(seed+x) = '\0';
 
-
     free(to_generate);
 
     return seed;
