@@ -38,10 +38,14 @@ void printMenuInterface(const char *name,const char *surname){
            "    [6] Log Out\n",name,surname);
 }
 
-void printShowAccountsInterface(const char *name,const char *surname){
+void printShowAccountsInterface(struct Session *Session){
 
-    printf("_*__*__*___*B_A_N_K*__*__*__*__*_\n"
+    printf("_*__*__*___*B_A_N_K*__*__*__*__*_\n\n"
     );
+    int nr = Session ->User ->nr_accounts;
+    for (int i = 0; i<nr; i++){
+        printf("%s %c %lu\n\n",Session->Accounts[i]->IBan,*Session->Accounts[i]->coin,Session->Accounts[i]->amount);
+    }
 }
 
 void printAddAccountInterface(){
@@ -70,20 +74,3 @@ void printAddAccountInterfaceFailed(char code[3]){
 
 
 
-
-void optionsMenuInterface(char choice){
-
-    switch(choice){
-        case '2': printAddAccountInterface();
-            break;
-        case '6': printf("Logging out...\n");
-            exit(0);
-        default: printf("Invalid choice\n");
-            break;
-
-
-    }
-
-
-
-}

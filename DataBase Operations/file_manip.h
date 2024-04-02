@@ -19,7 +19,7 @@ void addUserToDb(struct User* temp);
 
 
 
-bool isUserInDb(char*name, char*surname);
+char* isUserInDb(char*name, char*surname);
 
 bool isIbanInDb(char *IBan);
 

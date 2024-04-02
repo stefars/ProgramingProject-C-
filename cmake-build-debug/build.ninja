@@ -79,6 +79,12 @@ build CMakeFiles/Programing_Project.dir/Structure_Operations/Generative_Algorith
   OBJECT_DIR = CMakeFiles\Programing_Project.dir
   OBJECT_FILE_DIR = CMakeFiles\Programing_Project.dir\Structure_Operations\Generative_Algorithms
 
+build CMakeFiles/Programing_Project.dir/DataBase_Operations/Data_Fetch/Fetching.c.obj: C_COMPILER__Programing_Project_unscanned_Debug E$:/ProgramingProject-C-/DataBase$ Operations/Data$ Fetch/Fetching.c || cmake_object_order_depends_target_Programing_Project
+  DEP_FILE = CMakeFiles\Programing_Project.dir\DataBase_Operations\Data_Fetch\Fetching.c.obj.d
+  FLAGS = -g -std=gnu2x -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\Programing_Project.dir
+  OBJECT_FILE_DIR = CMakeFiles\Programing_Project.dir\DataBase_Operations\Data_Fetch
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target Programing_Project
@@ -87,7 +93,7 @@ build CMakeFiles/Programing_Project.dir/Structure_Operations/Generative_Algorith
 #############################################
 # Link the executable Programing_Project.exe
 
-build Programing_Project.exe: C_EXECUTABLE_LINKER__Programing_Project_Debug CMakeFiles/Programing_Project.dir/main.c.obj CMakeFiles/Programing_Project.dir/UI/UI.c.obj CMakeFiles/Programing_Project.dir/DataBase_Operations/file_manip.c.obj CMakeFiles/Programing_Project.dir/Structure_Operations/strucutres.c.obj CMakeFiles/Programing_Project.dir/Structure_Operations/Generative_Algorithms/generate.c.obj
+build Programing_Project.exe: C_EXECUTABLE_LINKER__Programing_Project_Debug CMakeFiles/Programing_Project.dir/main.c.obj CMakeFiles/Programing_Project.dir/UI/UI.c.obj CMakeFiles/Programing_Project.dir/DataBase_Operations/file_manip.c.obj CMakeFiles/Programing_Project.dir/Structure_Operations/strucutres.c.obj CMakeFiles/Programing_Project.dir/Structure_Operations/Generative_Algorithms/generate.c.obj CMakeFiles/Programing_Project.dir/DataBase_Operations/Data_Fetch/Fetching.c.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\Programing_Project.dir

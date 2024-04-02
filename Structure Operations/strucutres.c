@@ -27,7 +27,7 @@ void freeAccount(struct Account *Account){
 
 
 
-struct Account *createAccountInstance(char* id){
+struct Account *createAccountInstance(const char* id){
 
     struct Account *temp;
 
@@ -44,7 +44,7 @@ struct Account *createAccountInstance(char* id){
     return temp;
 }
 
-struct User *createUserInstance(char* name, char* surname){
+struct User *createUserInstance(const char* name,const char* surname){
 
     struct User *temp;
 
@@ -56,7 +56,7 @@ struct User *createUserInstance(char* name, char* surname){
 
     strcpy(temp->name,name);
     strcpy(temp->surname,surname);
-    temp->nr_accounts = 1;
+    temp->nr_accounts = "1";
 
 
     return temp;
@@ -64,7 +64,7 @@ struct User *createUserInstance(char* name, char* surname){
 
 
 
-void createUserAccount(char *user_id){
+void createUserAccount(const char *user_id){
     struct Account *New_Account;
 
     New_Account = createAccountInstance(user_id);

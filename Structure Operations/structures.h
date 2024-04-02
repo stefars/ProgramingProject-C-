@@ -5,7 +5,7 @@
 #ifndef PROGRAMING_PROJECT_STRUCTURES_H
 #define PROGRAMING_PROJECT_STRUCTURES_H
 
-//Find new place for these?
+
 
 #include "struct.h"
 
@@ -18,7 +18,6 @@ struct Account *createAccountInstance(char* id);
 struct User *createUserInstance(char* name, char* surname);
 
 void createUserAccount(char *user_id);
-
 
 void createNewUser(char* name, char* surname);
 

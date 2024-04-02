@@ -11,7 +11,7 @@ void printLoginInterface();
 
 void printMenuInterface(const char *name,const char *surname);
 
-void printShowAccountsInterface(const char *name,const char *surname);
+void printShowAccountsInterface(struct Session *Session);
 
 void printAddAccountInterface();
 
@@ -19,7 +19,7 @@ void printAddAccountInterfaceSuccessful();
 
 void printAddAccountInterfaceFailed(char code[3]);
 
-void optionsMenuInterface(char choice);
+
 
 
 #endif //PROGRAMING_PROJECT_UI_H

@@ -19,5 +19,13 @@ struct Account {
 
 };
 
+struct Session {
+    struct User *User;
+    struct Account **Accounts;
+
+
+
+};
+
 
 #endif //PROGRAMING_PROJECT_STRUCT_H

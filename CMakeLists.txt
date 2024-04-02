@@ -13,4 +13,6 @@ add_executable(Programing_Project main.c
         "Structure Operations/struct.h"
         "Structure Operations/Generative Algorithms/generate.h"
         "Structure Operations/Generative Algorithms/generate.c"
+        "DataBase Operations/Data Fetch/Fetching.c"
+        "DataBase Operations/Data Fetch/Fetching.h"
 )

@@ -6,7 +6,7 @@
 #include <time.h>
 #include "UI/UI.h"
 #include "Structure Operations/Generative Algorithms/generate.h"
-
+#include "DataBase Operations/Data Fetch/Fetching.h"
 
 
 int main() {
@@ -39,13 +39,11 @@ int main() {
 //while here?
     switch (choice) {
         case '1':
-            if (isUserInDb(name, surname) == 1) {
+            if (1) {
+                struct Session *Session;
 
-                //FETCH DATA
-
-                //CREATE USER STRUCT
-
-                // STORE ACCOUNT STRUCTS IN LIST
+                //Fetch User + Accounts data
+                Session = fetchUserData(name,surname);
 
 
                 printMenuInterface(name, surname);
@@ -59,6 +57,7 @@ int main() {
                     case '1':
 
                         printf("Show Accounts (WIP)\n");
+                        printShowAccountsInterface(Session);
                         break;
 
                     case '2':
@@ -69,8 +68,13 @@ int main() {
                         printAddAccountInterface();
 
                         //USE ID AFTER FETCHING
-                        
+
                         createUserAccount(generateUserId(name,surname));
+
+                        Session->User->nr_accounts ++;
+
+                        //UPDATE SESSION
+
 
                         //MAKE SURE TO MODIFY FUNCTIONS FOR DETECTING ERROR
 

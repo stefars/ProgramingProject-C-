@@ -26,7 +26,6 @@ void addAccountToDb(struct Account* temp){
     FILE *file_pointer;
     file_pointer = openCsvFile("..\\Data Base\\Accounts.csv", "a");
 
-    //SIGSEGV???
     fprintf(file_pointer,"%s,%s,%s,%lu\n",temp->IBan ,temp->id_user, temp->coin, temp->amount);
 
     fclose(file_pointer);
@@ -37,19 +36,19 @@ void addUserToDb(struct User* temp){
     FILE *file_pointer;
     file_pointer = openCsvFile("..\\Data Base\\Users.csv", "a");
 
-    fprintf(file_pointer,"%s,%s,%s\n", temp->id, temp->name, temp->surname);
+    fprintf(file_pointer,"%s,%s,%s,%d\n", temp->id, temp->name, temp->surname,temp->nr_accounts);
 
     fclose(file_pointer);
-
 
 }
 
 
 
-bool isUserInDb(char*name, char*surname){
+char *isUserInDb(char*name, char*surname){
     char *to_compare;
     char *token;
-    char row[CHAR_MAX];
+    char *row;
+    char buffer[CHAR_MAX];
 
     to_compare = generateUserId(name, surname);
     token = (char*)malloc(sizeof(char)*(strlen(to_compare)+1));
@@ -66,28 +65,37 @@ bool isUserInDb(char*name, char*surname){
 
     while(feof(file_pointer) == 0){
 
-        fgets(row,CHAR_MAX,file_pointer);
-        token = strtok(row,",");
+        fgets(buffer,CHAR_MAX,file_pointer);
+
+        row = (char*)malloc(sizeof(char)*strlen(buffer));
+        strcpy(row,buffer);
+
+        token = strtok(buffer,",");
 
         if (strcmp(token,to_compare) == 0){
 
             printf("User Found\n");
 
-            fclose(file_pointer);
+
             to_compare = NULL;
             free(to_compare);
+            fclose(file_pointer);
 
-            return 1;
+            return row;
         }
 
     }
 
     to_compare = NULL;
     token = NULL;
+    row  = NULL;
 
     free(to_compare);
     free(token);
-    return 0;
+    free(row);
+
+    fclose(file_pointer);
+    return NULL;
 
 }
 
