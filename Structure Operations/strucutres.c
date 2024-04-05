@@ -9,6 +9,7 @@
 #include "../DataBase Operations/file_manip.h"
 
 
+
 void freeUser(struct User *User){
     free(User->surname);
     free(User->name);
@@ -33,6 +34,11 @@ struct Account *createAccountInstance(const char* id){
 
     temp = (struct Account*)malloc(sizeof(struct Account));
 
+    if(temp == NULL){
+        printf("Not Enough Memory");
+        exit(0);
+    }
+
     temp->IBan = generateIBan();
     temp->id_user = (char*)malloc(sizeof(char)*strlen(id));
     temp->coin = (char*)malloc(sizeof(char));
@@ -56,13 +62,27 @@ struct User *createUserInstance(const char* name,const char* surname){
 
     strcpy(temp->name,name);
     strcpy(temp->surname,surname);
-    temp->nr_accounts = "1";
+    temp->nr_accounts = 1;
 
 
     return temp;
 }
 
+void addAccountToSession(struct Account *temp,struct Session *Session){
 
+    Session->Accounts = (struct Account**) realloc(Session->Accounts,
+            sizeof(struct Account*)*Session->User->nr_accounts);
+
+    if (Session->Accounts == NULL){
+        printf("FATAL ERROR, QUITTING");
+        exit(0);
+
+    }
+
+
+    Session->Accounts[Session->User->nr_accounts-1] = temp;
+
+}
 
 void createUserAccount(const char *user_id){
     struct Account *New_Account;

@@ -13,9 +13,11 @@ void printMenuInterface(const char *name,const char *surname);
 
 void printShowAccountsInterface(struct Session *Session);
 
+void printAddAccountInterfaceAsk();
+
 void printAddAccountInterface();
 
-void printAddAccountInterfaceSuccessful();
+void printAddAccountInterfaceSuccessful(struct Account *Account);
 
 void printAddAccountInterfaceFailed(char code[3]);
 

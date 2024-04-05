@@ -9,50 +9,73 @@
 #include "DataBase Operations/Data Fetch/Fetching.h"
 
 
+
 int main() {
 
+    time_t t;
+    srand((unsigned long long) (&t));
 
     char opcode[10], name[50], surname[50];
 
+
+
     char choice = '0';
+    start:
+
+    //login interface (function?)
+while(1) {
 
     printLoginInterface();
-
-//while here?
     scanf("%s %s %s", opcode, name, surname);
 
     if (!(isNameValid(name) && isNameValid(surname))) {
         printf("Invalid characters. Make sure you are using ASCII letters.\n");
-        return 0;
     }
 
-    if (strcmp(opcode, "login") == 0)
+    if (strcmp(opcode, "login") == 0) {
         choice = '1';
-    else if (strcmp(opcode, "register") == 0)
+        break;
+    }
+    else if (strcmp(opcode, "register") == 0) {
         choice = '2';
+        break;
+    }
+    else if (strcmp(opcode, "exit") == 0) {
+        return 0;
+    }
     else
         printf("Invalid command, please try again.");
 
 
-    //end while here?
+}
 
-//while here?
+while(1) {
     switch (choice) {
-        case '1':
-            if (1) {
-                struct Session *Session;
+        case '1': {
+            struct Session *Session;
 
-                //Fetch User + Accounts data
-                Session = fetchUserData(name,surname);
+            //Fetch User + Accounts data
+            Session = fetchUserData(name, surname);
+
+            if (Session == NULL) {
+                printf("User not registered.");
+                goto start;
+
+            }
+
+            menu:
+
+            printMenuInterface(name, surname);
 
 
-                printMenuInterface(name, surname);
-                scanf(" %c",&choice);
+            while (1) {
+                scanf(" %s", &choice);
+                if(strlen(&choice)>1){
+                    printf("Command can only be 1 character long.\n");
+                    continue;
+                }
 
-
-                //While here?
-
-                switch (choice){
+                switch (choice) {
 
                     case '1':
 
@@ -62,32 +85,61 @@ int main() {
 
                     case '2':
 
-                        printf("Add Accounts (WIP)\n");
+                        while(1){
+                            printf("Add Accounts (WIP)\n");
 
 
-                        printAddAccountInterface();
+                            printAddAccountInterfaceAsk();
 
-                        //USE ID AFTER FETCHING
+                            scanf(" %c",&choice);
 
-                        createUserAccount(generateUserId(name,surname));
+                            switch (choice) {
 
-                        Session->User->nr_accounts ++;
+                                case 'Y': {
+                                    struct Account *New_Account;
 
-                        //UPDATE SESSION
+                                    New_Account = createAccountInstance(Session->User->id);
+
+                                    Session->User->nr_accounts++;
+                                    addAccountToDb(New_Account);
+                                    addAccountToSession(New_Account, Session);
+
+                                    printAddAccountInterface();
+
+                                    //sleep?
+                                    printAddAccountInterfaceSuccessful(New_Account);
+                                    break;
+                                }
 
 
-                        //MAKE SURE TO MODIFY FUNCTIONS FOR DETECTING ERROR
-
-                        printAddAccountInterfaceSuccessful();
 
 
+                                case 'N':
+                                    //UPDATE DATABASE
+                                    goto menu;
 
-                        break;
+
+                                default:
+                                    printf("Invalid Command\n");
+                                    break;
+                            }
+
+
+
+
+                            //MAKE SURE TO MODIFY FUNCTIONS FOR DETECTING ERROR
+
+
+
+
+
+
+                        }
 
                     case '3':
 
                         printf("Edit Account (WIP)\n");
-
+                       // updateUserToDb(name,surname,);
                         break;
 
                     case '4':
@@ -104,54 +156,44 @@ int main() {
 
                     case '6':
 
-                        printf("Logging out");
+                        printf("Logging out\n");
+                        free(Session);
+                        goto start;
 
+                    default: {
+                        printf("Invalid choice\n");
                         break;
-
-                    default:
-
-                        printf("Invalid choice");
-                        break;
+                    }
 
                 }
 
 
 
-
-            } else {
-                printf("User not found");
-                return 0;
             }
-            break;
+        }
+            case '2':
 
+                if (strcmp(opcode, "register") == 0) {
+                    printf("You are making a new user\n");
 
-        case '2':
-
-            if (strcmp(opcode, "register") == 0) {
-                printf("You are making a new user\n");
-
-                if (isUserInDb(name,surname)) {
-                    printf("User already in Data Base!");
-                    break;
+                    if (isUserInDb(name, surname)) {
+                        printf("User already in Data Base!\n");
+                        goto start;
+                    } else {
+                        createNewUser(name, surname);
+                        goto start;
+                    }
                 }
-
-                else {
-                    createNewUser(name, surname);
-                    break;
-                }
-            }
-            break;
-        default:
-            printf("Invalid command, please try again.");
             break;
 
-    }
 
+            default:
+                printf("Invalid command, please try again.\n");
+                break;
 
+        }
 
-
-
-    //Make a function for these
+}
 
 
 

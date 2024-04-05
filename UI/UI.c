@@ -48,6 +48,17 @@ void printShowAccountsInterface(struct Session *Session){
     }
 }
 
+
+void printAddAccountInterfaceAsk(){
+
+    printf("_*__*__*___*B_A_N_K*__*__*__*__*_\n"
+           "          \n"
+           "       Generate new account?"
+           "\n"
+           "   Yes (Y)              Return (N)          "
+           "\n""\n""--------------------------------------\n");
+}
+
 void printAddAccountInterface(){
 
     printf("_*__*__*___*B_A_N_K*__*__*__*__*_\n"
@@ -57,11 +68,13 @@ void printAddAccountInterface(){
 }
 
 
-void printAddAccountInterfaceSuccessful(){
+void printAddAccountInterfaceSuccessful(struct Account *Account){
     printf("_*__*__*___*B_A_N_K*__*__*__*__*_\n"
-           "          \n"
-           "   Account created successfully! \n"
-           "\n""\n""--------------------------------------\n");
+           "\n"
+           "   Account %s %c %lu  \n"
+           "\n"
+           "       created successfully!    "
+           "\n""\n""--------------------------------------\n",Account->IBan,*Account->coin,Account->amount);
 }
 
 

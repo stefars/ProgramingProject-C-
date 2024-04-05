@@ -17,7 +17,9 @@ struct Account *createAccountInstance(char* id);
 
 struct User *createUserInstance(char* name, char* surname);
 
-void createUserAccount(char *user_id);
+void addAccountToSession(struct Account *temp,struct Session *Session);
+
+void createUserAccount(const char *user_id);
 
 void createNewUser(char* name, char* surname);
 

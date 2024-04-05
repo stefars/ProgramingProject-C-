@@ -6,6 +6,8 @@
 #include <string.h>
 #include <stdio.h>
 
+
+
 //FREEING TOKEN IN THIS FUNCTION YIELSD ERROR?
 char *generateUserId(char* name, char* surname){
 
@@ -53,17 +55,24 @@ char *generateUserId(char* name, char* surname){
 
 char *generateIBan(){
 
+
+
     int sum = 0;
     char IBan_rule_number;
     char *IBan_control_numbers;
     char *IBan_random_letters;
     char *IBan;
 
+
+
     IBan_random_letters = (char*)malloc(sizeof(char) * 6);
+    printf("Haha not here bro");
     if (IBan_random_letters == NULL){
         printf("Couldn't find space in memory\n");
         return NULL;  //Error code
     }
+
+
 
     IBan_control_numbers = (char*)malloc(sizeof(char) * 6);
     if (IBan_control_numbers == NULL){
@@ -79,8 +88,7 @@ char *generateIBan(){
 
     //Generating IBAN
 
-    time_t t;
-    srand((unsigned long long) (&t));
+
 
 
     for (int i = 0; i < 5; i++){
@@ -118,7 +126,8 @@ char *generateIBan(){
     *(IBan+16) = '\0';
 
 
-
+    IBan_random_letters = NULL;
+    IBan_control_numbers = NULL;
     free(IBan_control_numbers);
     free(IBan_random_letters);
 

@@ -11,7 +11,17 @@
 
 FILE *openCsvFile(const char *filePath, const char *mode);
 
+// NO SIMULTANOUS SESSIONS EZ PZ
 
+FILE *findUserInDb(const char *name, const char *surname);
+
+void updateUserToDb(const char *name, const char *surname, const char *to_update);
+
+char* isUserInDb(const char*name,const char*surname);
+
+bool isIbanInDb(const char *IBan);
+
+void addSessionToDb(struct Session* temp);
 
 void addAccountToDb(struct Account* temp);
 
@@ -19,9 +29,7 @@ void addUserToDb(struct User* temp);
 
 
 
-char* isUserInDb(char*name, char*surname);
 
-bool isIbanInDb(char *IBan);
 
 
 //TEMPORARY STORED HERE

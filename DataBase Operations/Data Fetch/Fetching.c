@@ -44,7 +44,6 @@ struct Account **fetchAccountsData(const char* user_id,int nr_accounts){
         token = strtok(NULL,",");
 
 
-
         if (strcmp(token,user_id)==0){
             struct Account *temp;
 
@@ -90,6 +89,11 @@ struct Session *fetchUserData(char* name,char* surname){
     int nr_accounts;
     row = isUserInDb(name,surname);
 
+    if (row == NULL){
+        return NULL;
+
+    }
+
     //Fail case
 
     Session = (struct Session*)malloc(sizeof(struct Session));
@@ -107,7 +111,7 @@ struct Session *fetchUserData(char* name,char* surname){
     struct User *temp;
     temp = createUserInstance(name,surname);
     temp -> nr_accounts = nr_accounts;
-    printf("%d",temp->nr_accounts);
+
 
 
     Session -> User = temp;
