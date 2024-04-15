@@ -3,10 +3,10 @@
 //
 #include <stdlib.h>
 #include <string.h>
-#include "struct.h"
+#include "../Headers/struct.h"
 #include <stdio.h>
-#include "Generative Algorithms/generate.h"
-#include "../DataBase Operations/file_manip.h"
+#include "../Headers/generate.h"
+#include "../Headers/file_manip.h"
 
 
 
@@ -93,7 +93,7 @@ void createUserAccount(const char *user_id){
 
     freeAccount(New_Account);
     //Free Amount also?
-}
+}  //delete?
 
 void createNewUser(char* name, char* surname){
 

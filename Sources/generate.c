@@ -1,7 +1,7 @@
 //
 // Created by hidro on 3/27/2024.
 //
-#include "..\struct.h"
+#include "../Headers/struct.h"
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>

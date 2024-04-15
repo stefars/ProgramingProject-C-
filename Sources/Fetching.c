@@ -5,9 +5,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "../file_manip.h"
-#include "../../Structure Operations/struct.h"
-#include "../../Structure Operations/structures.h"
+#include "../Headers/file_manip.h"
+#include "../Headers/struct.h"
+#include "../Headers/structures.h"
 
 
 

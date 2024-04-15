@@ -4,8 +4,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "../Structure Operations/structures.h"
-#include "../Structure Operations/Generative Algorithms/generate.h"
+#include "../Headers/structures.h"
+#include "../Headers/generate.h"
 
 FILE *openCsvFile(const char *filePath, const char *mode){
 
@@ -231,17 +231,74 @@ void addUserToDb(struct User* temp){
 
 
 //TEMPORARY STORED HERE
-bool isNameValid(const char *name){
-    int i = 0;
-    while(*(i+name)) {
 
-        //Check if char is a letter
-        if ((*(i+name)<'A')||(*(i+name)>'z')||(((*(i+name)>'Z') && (*(i+name)<'a')))){
-            return 0;
-        }
-        i++;
+void addMoney(struct Session *Session,char option){
+
+    char input_iban[15];
+    int acc = -1;//Dynamic or??
+
+    printf("Add Money (Y) or Return? (R)\n");
+    scanf(" %c",&option);
+
+    switch(option){
+        case 'Y':
+
+            printf("Please enter IBan");
+            scanf(" %s",input_iban);
+
+            if(strlen(input_iban)!=15){
+                printf("Invalid IBan");
+                break;
+            }
+
+            //VERIFY CASES
+            for(int i = 0; i < Session->User->nr_accounts;i++){
+                if(strcmp(Session->Accounts[i]->IBan,input_iban) == 0){
+                    acc = i;
+                    break;
+                }
+            }
+
+
+
+
+            if (acc == -1){
+                printf("Account not owned or does not exist.\n");
+                //loop to beggining of add money
+
+            }
+
+
+            unsigned long amount;
+
+            printf("Please enter amount:");
+
+            scanf("%lu",&amount);
+
+            Session->Accounts[acc]->amount = amount;
+
+
+            break;
+
+
+        case 'R':
+            //UPDATE DB
+            return;
+
+        default:
+            printf("Invalid input\n");
+            break;
+
     }
-    return 1;
+
+    //Ask for IBan
+
+
+
+    //Ask if they want to continue
 
 }
+
+
+
 

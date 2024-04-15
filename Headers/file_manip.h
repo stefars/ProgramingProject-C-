@@ -33,6 +33,10 @@ void addUserToDb(struct User* temp);
 
 
 //TEMPORARY STORED HERE
-bool isNameValid(const char *name);
+
+void addMoney(struct Session *Session,char option);
+
+
+void getCredentials(char input_buffer);
 
 #endif //PROGRAMING_PROJECT_FILE_MANIP_H

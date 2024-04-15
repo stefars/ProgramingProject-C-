@@ -3,7 +3,7 @@
 //
 #include <stdio.h>
 #include <stdlib.h>
-#include "../Structure Operations/structures.h"
+#include "../Headers/structures.h"
 
 void printLoginInterface(){
     printf( "_*__*__*___*B_A_N_K*__*__*__*__*_\n"
