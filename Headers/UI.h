@@ -21,6 +21,12 @@ void printAddAccountInterfaceSuccessful(struct Account *Account);
 
 void printAddAccountInterfaceFailed(char code[3]);
 
+void printAddMoneySuccessfulInterface();
+
+void printAddMoneyMoneyInterface();
+
+void printAddMoneyIBanInterface();
+
 
 
 

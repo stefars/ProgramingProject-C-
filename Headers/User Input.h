@@ -10,4 +10,12 @@ void getCredentials(char *input_buffer,char **name, char **surname, char **opcod
 
 void verifyCredentials(char *name, char *surname, char **opcode);
 
+void getInput(char *buffer,char *option);
+
+unsigned long long validateAmount(char *option);
+
+void validateChoice(char *option);
+
+void validateIBAN(char *option);
+
 #endif //PROGRAMING_PROJECT_USER_INPUT_H

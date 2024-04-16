@@ -86,4 +86,24 @@ void printAddAccountInterfaceFailed(char code[3]){
 }
 
 
+void printAddMoneyIBanInterface(){
 
+    printf("_*__*__*___*B_A_N_K*__*__*__*__*_\n\n\n"
+           "Insert an owned IBAN:\n\n"
+           "Return to menu by typing 'back'\n");
+
+}
+
+void printAddMoneyMoneyInterface() {
+    printf("_*__*__*___*B_A_N_K*__*__*__*__*_\n\n\n"
+           "Insert amount:\n\n"
+           "Return to menu by typing 'back'\n");
+
+}
+
+void printAddMoneySuccessfulInterface() {
+    printf("_*__*__*___*B_A_N_K*__*__*__*__*_\n\n\n"
+           "Money successfully added!\n");
+
+
+}

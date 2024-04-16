@@ -17,6 +17,7 @@ int main() {
     srand((unsigned long long) (&t));
 
     char input_buffer[150];
+    char option[50];
     char *opcode,*name,*surname;
 
 
@@ -34,6 +35,7 @@ int main() {
             continue;
 
         is_running = '1';
+
         //Menu loop
         while (is_running == '1') {
             switch (choice) {
@@ -45,38 +47,41 @@ int main() {
 
                     if (Session == NULL) {
                         printf("User not registered.");
-
-
+                        is_running = '0';
+                        break;
                     }
-
-                    menu:
-
-                    printMenuInterface(name, surname);
 
 
                     while (1) {
-                        scanf(" %s", &choice);
-                        if (strlen(&choice) > 1) {
-                            printf("Command can only be 1 character long.\n");
+
+                        if(strcmp(option,"return")==0)
+                            break;
+                        //clean screen;
+                        printMenuInterface(Session->User->name, Session->User->surname);
+
+                        getChoiceFunction(input_buffer,option);
+
+                        if(strcmp(option,"ERROR") == 0){
                             continue;
                         }
 
+                        choice = *option;
                         switch (choice) {
 
                             case '1':
 
-                                printf("Show Accounts (WIP)\n");
                                 printShowAccountsInterface(Session);
                                 break;
 
                             case '2':
 
                                 while (1) {
-                                    printf("Add Accounts (WIP)\n");
-
+                                    if(strcmp(option,"back")==0)
+                                        break;
 
                                     printAddAccountInterfaceAsk();
 
+                                    // Need Changed;
                                     scanf(" %c", &choice);
 
                                     switch (choice) {
@@ -100,8 +105,8 @@ int main() {
 
                                         case 'N':
                                             //UPDATE DATABASE
-                                            goto menu;
-
+                                            strcpy(option,"back");
+                                            break;
 
                                         default:
                                             printf("Invalid Command\n");
@@ -119,12 +124,17 @@ int main() {
 
                             case '4':
 
-                                printf("Add money (WIP)\n");
-
                                 while (1) {
 
+                                    addMoneyFunction(input_buffer,option,Session);
 
-                                    addMoney(Session, choice);
+                                    if(strcmp(option,"ERROR") == 0)
+                                        continue;
+
+                                    if(strcmp(option,"back") == 0){
+                                        break;
+                                    }
+
                                     break;
                                 }
                                 break;
@@ -138,7 +148,9 @@ int main() {
                             case '6':
 
                                 printf("Logging out\n");
-                                free(Session);
+                                is_running = '0';
+                                strcpy(option,"return");
+                                break;
 
 
                             default: {
@@ -150,34 +162,30 @@ int main() {
 
 
                     }
-                }
-                case '2':
-//REDUNDANT CHECKS
-                    if (strcmp(opcode, "register") == 0) {
-                        printf("You are making a new user\n");
 
-                        if (isUserInDb(name, surname)) {
-                            printf("User already in Data Base!\n");
-                            is_running = '0';
-                            break;
-
-
-                        } else {
-                            createNewUser(name, surname);
-                            is_running = '0';
-                            break;
-                        }
-                    }
                     break;
+                }
+                case '2': {
+                    //COULD BE A FUNCTION
+                    printf("You are making a new user\n");
 
+                    if (isUserInDb(name, surname)) {
+                        printf("User already in Data Base!\n");
+                        is_running = '0';
+                        break;
+
+                    }
+
+                    createNewUser(name, surname);
+                    is_running = '0';
+                    break;
+                }
 
                 case '0':
                     return 0;
 
-                case '-':
 
                 default:
-                    printf("Invalid command, please try again.\n");
                     break;
 
             }
