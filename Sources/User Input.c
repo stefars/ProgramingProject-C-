@@ -237,4 +237,27 @@ void validateIBAN(char *option){
 
 }
 
+void validateEditIBAN(char *option){
+
+    if (strlen(option) != 5){
+        strcpy(option,"ERROR");
+        return;
+    }
+
+    for(int i = 0; i < 5; i++){
+
+        if(option[i] < 'A' || option[i] > 'Z'){
+            strcpy(option,"ERROR");
+            printf("Invalid format\n");
+            return;
+        }
+
+    }
+
+
+}
 //Create Validation file?
+
+
+//UTILITY
+

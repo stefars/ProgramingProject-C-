@@ -8,6 +8,6 @@
 #endif //PROGRAMING_PROJECT_GENERATE_H
 
 
-char *generateUserId(char* name, char* surname);
+char *generateUserId(const char* name,const char* surname);
 
 char *generateIBan();

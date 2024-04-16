@@ -9,7 +9,7 @@
 
 
 //FREEING TOKEN IN THIS FUNCTION YIELSD ERROR?
-char *generateUserId(char* name, char* surname){
+char *generateUserId(const char* name,const char* surname){
 
     char *to_generate,*seed;
 

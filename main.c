@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include "Headers/structures.h"
 #include "Headers/file_manip.h"
-#include <time.h>
 #include "Headers/UI.h"
 #include "Headers/generate.h"
 #include "Headers/Fetching.h"
@@ -21,12 +20,12 @@ int main() {
     char *opcode,*name,*surname;
 
 
-    char is_running = '1';
+    char is_running;
     char choice = '0';
 
 
     while(1) {
-
+        strcpy(option,"Mirel Rodrigo");
         //login interface
         printLoginInterface();
 
@@ -95,6 +94,9 @@ int main() {
                                             addAccountToDb(New_Account);
                                             addAccountToSession(New_Account, Session);
 
+                                            modifyUserTempFile(Session->User);
+                                            updateUsersFileOriginal();
+
                                             printAddAccountInterface();
 
                                             //sleep?
@@ -117,9 +119,86 @@ int main() {
                                 }
 
                             case '3':
+                                //Edit Account select Account
+                                while(1){
+                                    if(!strcmp(option,"back"))
+                                        break;
+                                    printf("Enter Account:\n");
+                                    int index = getAccountByIBAN(input_buffer,option,Session);
 
-                                printf("Edit Account (WIP)\n");
-                                // updateUserToDb(name,surname,);
+                                    if(strcmp(option,"ERROR") == 0)
+                                        continue;
+                                    if(!strcmp(option,"back"))
+                                       break;
+
+                                    //Edit Account Menu
+                                    while(1) {
+                                        if(!strcmp(option,"return"))
+                                            break;
+
+                                        printf("[1] Edit Currency\n[2] Edit IBAN\n[3] Delete\n[4] Return\n");
+                                        getChoiceFunction(input_buffer, option);
+
+                                        if (strcmp(option, "ERROR") == 0) {
+                                            continue;
+                                        }
+
+                                        choice = *option;
+
+                                        switch (choice){
+
+                                            case '1':
+                                                //Currency Edit;
+                                                editCurrency(input_buffer,option,Session->Accounts[index]);
+                                                if (strcmp(option, "ERROR") == 0) {
+                                                    continue;
+                                                }
+                                                if (strcmp(option, "back") == 0) {
+                                                    continue;
+                                                }
+
+                                                break;
+                                            case '2':
+                                                //Edit IBAN
+                                                editIBAN(input_buffer,option,Session->Accounts[index]);
+                                                if (strcmp(option, "ERROR") == 0) {
+                                                    continue;
+                                                }
+                                                if (strcmp(option, "back") == 0) {
+                                                    continue;
+                                                }
+
+                                                break;
+                                            case '3':
+                                                //Delete Account.
+                                                deleteAccount(Session->Accounts[index]->IBan,&Session->Accounts[index],Session->User);
+                                                if (strcmp(option, "ERROR") == 0) {
+                                                    continue;
+                                                }
+                                                if (strcmp(option, "back") == 0) {
+                                                    continue;
+                                                }
+
+
+                                                break;
+                                            case '4':
+                                                strcpy(option,"return");
+                                                continue;
+
+                                            default:
+                                                printf("No clue");
+                                                break;
+                                        }
+
+
+                                        break;
+                                    }
+
+
+
+                                    break;
+                                }
+
                                 break;
 
                             case '4':

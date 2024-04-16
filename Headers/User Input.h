@@ -18,4 +18,6 @@ void validateChoice(char *option);
 
 void validateIBAN(char *option);
 
+void validateEditIBAN(char *option);
+
 #endif //PROGRAMING_PROJECT_USER_INPUT_H

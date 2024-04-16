@@ -34,9 +34,12 @@ void addUserToDb(struct User* temp);
 
 //TEMPORARY STORED HERE
 
-void addMoney(struct Session *Session,char option);
+void updateAccountFileOriginal();
+void modifyAccountTempFile(const struct Account *Account,const char *old_IBAN);
 
+void updateUsersFileOriginal();
+void modifyUserTempFile(const struct User *User);
+void deleteAccount(const char *IBan,struct Account **Account,struct User *User);
 
-void getCredentials(char input_buffer);
 
 #endif //PROGRAMING_PROJECT_FILE_MANIP_H

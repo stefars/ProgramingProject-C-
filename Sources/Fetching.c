@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 #include "../Headers/file_manip.h"
 #include "../Headers/struct.h"
 #include "../Headers/structures.h"
@@ -15,9 +16,11 @@
 struct Account **fetchAccountsData(const char* user_id,int nr_accounts){
     char *row;
     char *token;
-    char buffer[CHAR_MAX];
+    char buffer[200];
     int index = 0;
     struct Account **Accounts;
+
+
 
     Accounts = (struct Account**)malloc(sizeof(struct Account*)*nr_accounts);
 
@@ -27,24 +30,33 @@ struct Account **fetchAccountsData(const char* user_id,int nr_accounts){
 
 
 
-    while(feof(file_pointer)==0){
+    while(fgets(buffer,200,file_pointer)!=NULL){
 
-        if (nr_accounts == 0)
+        if (nr_accounts == 0) {
+
             break;
+        }
 
-        fgets(buffer,CHAR_MAX,file_pointer);
 
         row = (char*)malloc(sizeof(char)*strlen(buffer));
+
 
         //Fail case
 
         strcpy(row,buffer);
 
+        if(*row == '\n'){
+            free(row);
+            continue;
+
+        }
         token = strtok(buffer,",");
         token = strtok(NULL,",");
 
 
+
         if (strcmp(token,user_id)==0){
+
             struct Account *temp;
 
             //Make new function?
@@ -57,10 +69,20 @@ struct Account **fetchAccountsData(const char* user_id,int nr_accounts){
             strcpy(temp -> id_user,token);
 
             token = strtok(NULL,",");
-            temp -> coin = token;
+            strcpy(temp -> coin,token);
+
 
             token = strtok(NULL,",");
-            temp -> amount = strtol(token,NULL,10);
+
+            //String to Integer
+            int i = 0;
+            unsigned long long amount = 0;
+            while(token[i] != '\n'){
+                amount = amount * 10 + (token[i] - 48);
+                i++;
+            }
+
+            temp -> amount = amount;
 
             Accounts[index] = temp;
 
@@ -68,16 +90,17 @@ struct Account **fetchAccountsData(const char* user_id,int nr_accounts){
             nr_accounts--;
 
 
+
+
         }
 
-
+        free(row);
     }
+
     token = NULL;
-    free(token);
-    free(row);
+    printf("One day?\n");
     fclose(file_pointer);
     return Accounts;
-
 
 }
 
@@ -91,7 +114,6 @@ struct Session *fetchUserData(char* name,char* surname){
 
     if (row == NULL){
         return NULL;
-
     }
 
     //Fail case

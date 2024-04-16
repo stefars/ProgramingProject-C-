@@ -11,4 +11,10 @@ char loginFunction(char **opcode, char**name, char **surname,char *buffer);
 void addMoneyFunction(char *buffer,char *option,struct Session *Session);
 
 void getChoiceFunction(char *buffer,char *option);
+
+void editCurrency(char *buffer,char *option,struct Account *Account);
+
+void editIBAN(char *buffer, char *option,struct Account *Account);
+
+int getAccountByIBAN(char *buffer,char *option,const struct Session *Session);
 #endif //PROGRAMING_PROJECT_MAIN_FUNCTIONS_H

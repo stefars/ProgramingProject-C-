@@ -2,7 +2,6 @@
 // Created by hidro on 3/27/2024.
 //
 #include <stdio.h>
-#include <stdlib.h>
 #include "../Headers/structures.h"
 
 void printLoginInterface(){
@@ -44,7 +43,12 @@ void printShowAccountsInterface(struct Session *Session){
     );
     int nr = Session ->User ->nr_accounts;
     for (int i = 0; i<nr; i++){
-        printf("%s %c %lu\n\n",Session->Accounts[i]->IBan,*Session->Accounts[i]->coin,Session->Accounts[i]->amount);
+        printf("%p\n",Session->Accounts[i]);
+        if(Session->Accounts[i] == NULL){
+            printf("I'm here if you even care");
+            continue;}
+        else
+            printf("%s %c %llu\n\n",Session->Accounts[i]->IBan,*Session->Accounts[i]->coin,Session->Accounts[i]->amount);
     }
 }
 
@@ -71,7 +75,7 @@ void printAddAccountInterface(){
 void printAddAccountInterfaceSuccessful(struct Account *Account){
     printf("_*__*__*___*B_A_N_K*__*__*__*__*_\n"
            "\n"
-           "   Account %s %c %lu  \n"
+           "   Account %s %c %llu  \n"
            "\n"
            "       created successfully!    "
            "\n""\n""--------------------------------------\n",Account->IBan,*Account->coin,Account->amount);

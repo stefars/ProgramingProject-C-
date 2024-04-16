@@ -13,7 +13,7 @@ void freeUser(struct User *User);
 
 void freeAccount(struct Account *Account);
 
-struct Account *createAccountInstance(char* id);
+struct Account *createAccountInstance(const char* id);
 
 struct User *createUserInstance(char* name, char* surname);
 

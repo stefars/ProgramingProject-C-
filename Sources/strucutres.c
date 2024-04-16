@@ -20,9 +20,14 @@ void freeUser(struct User *User){
 
 void freeAccount(struct Account *Account){
     free(Account->IBan);
+
     free(Account->id_user);
+
     free(Account->coin);
+
     free(Account);
+    Account = NULL;
+
 
 }
 
@@ -31,8 +36,10 @@ void freeAccount(struct Account *Account){
 struct Account *createAccountInstance(const char* id){
 
     struct Account *temp;
-
+    printf("I'M HERE createAccountInstance");
     temp = (struct Account*)malloc(sizeof(struct Account));
+
+
 
     if(temp == NULL){
         printf("Not Enough Memory");
@@ -70,10 +77,11 @@ struct User *createUserInstance(const char* name,const char* surname){
 
 void addAccountToSession(struct Account *temp,struct Session *Session){
 
-    Session->Accounts = (struct Account**) realloc(Session->Accounts,
+    Session->Accounts = (struct Account**)realloc(Session->Accounts,
             sizeof(struct Account*)*Session->User->nr_accounts);
 
     if (Session->Accounts == NULL){
+        free(Session->Accounts);
         printf("FATAL ERROR, QUITTING");
         exit(0);
 
@@ -83,6 +91,8 @@ void addAccountToSession(struct Account *temp,struct Session *Session){
     Session->Accounts[Session->User->nr_accounts-1] = temp;
 
 }
+
+
 
 void createUserAccount(const char *user_id){
     struct Account *New_Account;
