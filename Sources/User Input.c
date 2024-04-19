@@ -75,16 +75,13 @@ void getInput(char *buffer,char *option){
     if (buffer_length==0){
         printf("No input detected\n");
         return;
-
     }
 
     for (int i = 0; i < buffer_length; i++){
 
         if (isspace(*(buffer+i)))
             arguments++;
-
     }
-
 
 
     if(arguments != 1){
@@ -96,7 +93,6 @@ void getInput(char *buffer,char *option){
 
         printf("Too many arguments,only 1 needed.\n");
         return;
-
     }
 
     strcpy(option,buffer);
@@ -138,6 +134,8 @@ unsigned long long validateAmount(char *option){
     if(strcmp(option,"back")==0)
         return 0;
 
+
+
     unsigned long long int amount = 0;
     short length = strlen(option);
 
@@ -163,6 +161,7 @@ unsigned long long validateAmount(char *option){
         amount = amount * 10 + (option[i] - 48);
 
     }
+
 
     return amount;
 
@@ -256,7 +255,7 @@ void validateEditIBAN(char *option){
 
 
 }
-//Create Validation file?
+
 
 
 //UTILITY

@@ -59,7 +59,6 @@ struct Account **fetchAccountsData(const char* user_id,int nr_accounts){
 
             struct Account *temp;
 
-            //Make new function?
             temp = createAccountInstance(user_id);
 
             token = strtok(row,",");
@@ -98,7 +97,6 @@ struct Account **fetchAccountsData(const char* user_id,int nr_accounts){
     }
 
     token = NULL;
-    printf("One day?\n");
     fclose(file_pointer);
     return Accounts;
 

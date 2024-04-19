@@ -9,6 +9,7 @@
 #include "../Headers/struct.h"
 #include "../Headers/UI.h"
 #include "../Headers/file_manip.h"
+#include "../Headers/structures.h"
 
 char loginFunction(char **opcode, char**name, char **surname,char *buffer){
 
@@ -18,7 +19,7 @@ char loginFunction(char **opcode, char**name, char **surname,char *buffer){
 
         printf("%s\n",buffer);
 
-        strcpy(buffer, removeDubSpaces(buffer));
+        removeDubSpaces(buffer);
 
         getCredentials(buffer,name,surname,opcode);
         if(*opcode == NULL){
@@ -60,7 +61,7 @@ void addMoneyFunction(char *buffer,char *option,struct Session *Session){
     unsigned long long amount;
     //GET IBAN
     fgets(buffer, 150, stdin);
-    strcpy(buffer, removeDubSpaces(buffer));
+    removeDubSpaces(buffer);
     getInput(buffer,option);
 
 
@@ -98,8 +99,9 @@ void addMoneyFunction(char *buffer,char *option,struct Session *Session){
 
     // GET AMOUNT
     fgets(buffer, 150, stdin);
-    strcpy(buffer, removeDubSpaces(buffer));
+    removeDubSpaces(buffer);
     getInput(buffer,option);
+
 
     if(strcmp(option,"ERROR")==0){
         return;
@@ -127,9 +129,10 @@ void addMoneyFunction(char *buffer,char *option,struct Session *Session){
 
 void getChoiceFunction(char *buffer,char *option){
 
+
     fgets(buffer, 150, stdin);
 
-    strcpy(buffer, removeDubSpaces(buffer));
+    removeDubSpaces(buffer);
 
     getInput(buffer,option);
 
@@ -144,38 +147,36 @@ void getChoiceFunction(char *buffer,char *option){
 
 int getAccountByIBAN(char *buffer,char *option,const struct Session *Session){
 
+
     fgets(buffer, 150, stdin);
-    strcpy(buffer, removeDubSpaces(buffer));
+    removeDubSpaces(buffer);
     getInput(buffer,option);
 
 
     validateIBAN(option);
 
     if(strcmp(option,"back") == 0){
-        return 100;
+        return -1;
     }
 
     if(strcmp(option,"ERROR") == 0){
-        return 100;
+        return -1;
     }
 
 
-    char IBAN[16];
-    strcpy(IBAN,option);
-    IBAN[15] = '\0';
 
     //Find Account Index
     for(int i = 0; i < Session->User->nr_accounts;i++){
         if(Session->Accounts[i] == NULL)
             continue;
-        if(strcmp(Session->Accounts[i]->IBan,IBAN) == 0){
+        if(strcmp(Session->Accounts[i]->IBan,option) == 0){
             return i;
         }
     }
 
     printf("Account not owned or does not exist.\n");
     strcpy(option,"ERROR");
-    return 100;
+    return -1;
 
 
 
@@ -183,9 +184,10 @@ int getAccountByIBAN(char *buffer,char *option,const struct Session *Session){
 
 void editCurrency(char *buffer,char *option,struct Account *Account){
 
-    printf("Enter new currency. \n[E] Euro\n [U] USD\n [R] Ron \n");
+    editAccountCurrency();
+
     fgets(buffer, 150, stdin);
-    strcpy(buffer, removeDubSpaces(buffer));
+    removeDubSpaces(buffer);
     getInput(buffer,option);
 
     if(strcmp(option,"ERROR")==0){
@@ -194,20 +196,16 @@ void editCurrency(char *buffer,char *option,struct Account *Account){
     if(strcmp(option,"back")==0){
         return;
     }
-    //Validate Currency
-    //Just check if option == E or R or U ez
+
 
     if(!(*option == 'E' || *option == 'R' || *option == 'U')){
         strcpy(option,"ERROR");
         return;
     }
 
-    // 4.98 R = 1 E | 1 R = 0.20 E
-    // 4.46 R = 1 U | 1 R = 0.21 U
-    // 1 E = 1.06 U | 1 U = 0.94 E
 
     if (*Account->coin == *option){
-        printf("Currency already in use.");
+        printf("Currency already in use.\n");
         strcpy(option,"ERROR");
 
     }
@@ -247,12 +245,48 @@ void editCurrency(char *buffer,char *option,struct Account *Account){
 
 }
 
+void exchangeValue(unsigned long long *amount,const char coin,const char Receiver){
+
+    if (Receiver == coin){
+        return;
+    }
+
+    if (coin == 'R'){
+
+        if(Receiver == 'E')
+            *amount = (int)(*amount * 0.2);
+        else
+            *amount = (int)(*amount * 0.21);
+
+    }
+
+    if (coin == 'E'){
+
+        if(Receiver == 'R')
+            *amount = (int)(*amount * 4.98);
+        else
+            *amount = (int)(*amount * 1.06);
+    }
+
+    if(coin == 'U'){
+
+        if(Receiver== 'R')
+            *amount = (int)(*amount * 4.46);
+        else
+            *amount = (int)(*amount * 0.94);
+
+    }
+
+}
+
 void editIBAN(char *buffer, char *option,struct Account *Account){
-    printf("Enter 5 capital letters\n");
+
+    editAccountIBAN();
 
     fgets(buffer, 150, stdin);
-    strcpy(buffer, removeDubSpaces(buffer));
+    removeDubSpaces(buffer);
     getInput(buffer,option);
+
 
     if(strcmp(option,"ERROR")==0){
         return;
@@ -279,6 +313,179 @@ void editIBAN(char *buffer, char *option,struct Account *Account){
 
 
 }
+
+
+//Over flow error?
+void transferMoney(char *buffer,char *option,struct Session *Session){
+
+    printf("Input an owned Account IBAN: \n");
+
+    int acc1 = getAccountByIBAN(buffer,option,Session);
+
+    if(strcmp(option,"ERROR")==0){
+        return;
+    }
+
+    //Acc1 Obtained
+    printf("Input an Account IBAN to send money: \n");
+
+    fgets(buffer, 150, stdin);
+    removeDubSpaces(buffer);
+    getInput(buffer,option);
+
+
+    validateIBAN(option);
+
+
+    if(strcmp(option,"back") == 0){
+        return;
+    }
+
+    if(strcmp(option,"ERROR") == 0){
+        return;
+    }
+
+
+    int acc2 = -1;
+    //Find Account Index
+    for(int i = 0; i < Session->User->nr_accounts;i++){
+        if(Session->Accounts[i] == NULL)
+            continue;
+        if(strcmp(Session->Accounts[i]->IBan,option) == 0){
+            acc2 = i;
+        }
+    }
+
+//Cases if owned or if not owned.
+
+    if (acc2 == -1){
+        strcpy(buffer,option);
+        getRowByIban(option, buffer);
+
+        printf("%s\n",buffer);
+
+        struct Account *temp;
+        char *token;
+
+        temp = (struct Account*)malloc(sizeof (struct Account));
+
+        token = strtok(buffer,",");
+        strcpy(temp -> IBan,token);
+        token = strtok(NULL,",");
+        strcpy(temp -> id_user,token);
+        token = strtok(NULL,",");
+        temp->coin = token;
+        token = strtok(NULL,",");
+
+        if(!strcmp(temp->coin,"0"))
+        {
+            temp->amount = 0;
+        }
+        else{
+
+            temp->amount = validateAmount(token);
+
+        }
+
+        if (!strcmp(option,"ERROR")){
+            printf("No IBAN found\n");
+            return;
+        }
+
+        printf("Enter Amount: \n");
+
+        fgets(buffer, 150, stdin);
+        removeDubSpaces(buffer);
+        getInput(buffer,option);
+
+
+        if(strcmp(option,"ERROR")==0){
+            return;
+        }
+        unsigned long long amount = validateAmount(option);
+
+        if(strcmp(option,"back") == 0){
+            return;
+        }
+
+        if(strcmp(option,"ERROR") == 0){
+            return;
+        }
+
+
+        if(Session->Accounts[acc1]->amount - amount < 0){
+            printf("Not enough money in account\n");
+            strcpy(option,"ERROR");
+            return;
+        }
+        Session->Accounts[acc1]->amount -=amount;
+        exchangeValue(&amount,*Session->Accounts[acc1]->coin,*temp->coin);
+        temp->amount += amount;
+
+        modifyAccountTempFile(temp,"bluff");
+        printf("Hello\n");
+        updateAccountFileOriginal();
+        printf("Hello\n");
+        modifyAccountTempFile(Session->Accounts[acc1],"bluff");
+        printf("Hello\n");
+        updateAccountFileOriginal();
+        printf("Hello\n");
+
+        freeAccount(temp);
+
+        strcpy(option,"back");
+        return;
+    }
+
+    if(acc1 == acc2){
+        printf("Can not transfer money to the same account\n");
+        strcpy(option,"ERROR");
+        return;
+
+    }
+
+    printf("Enter Amount: \n");
+
+    fgets(buffer, 150, stdin);
+    removeDubSpaces(buffer);
+    getInput(buffer,option);
+
+    if(strcmp(option,"ERROR")==0){
+        return;
+    }
+
+    unsigned long long amount = validateAmount(option);
+
+    if(strcmp(option,"back") == 0){
+        return;
+    }
+
+    if(strcmp(option,"ERROR") == 0){
+        return;
+    }
+
+
+    if(Session->Accounts[acc1]->amount - amount < 0){
+        printf("Not enough money in account\n");
+        strcpy(option,"ERROR");
+        return;
+    }
+
+    Session->Accounts[acc1]->amount -=amount;
+
+    exchangeValue(&amount,*Session->Accounts[acc1]->coin,*Session->Accounts[acc2]->coin);
+
+    Session->Accounts[acc2]->amount += amount;
+
+
+    modifyAccountTempFile(Session->Accounts[acc1],"bluff");
+    updateAccountFileOriginal();
+    modifyAccountTempFile(Session->Accounts[acc2],"bluff");
+    updateAccountFileOriginal();
+
+    strcpy(option,"back");
+}
+
 
 
 //utility?

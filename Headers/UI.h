@@ -27,6 +27,14 @@ void printAddMoneyMoneyInterface();
 
 void printAddMoneyIBanInterface();
 
+void editAccountAskIBAN();
+
+void editAccountMenu(struct Account *Account);
+
+void editAccountCurrency();
+
+void editAccountIBAN();
+
 
 
 

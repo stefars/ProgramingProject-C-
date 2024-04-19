@@ -21,8 +21,6 @@ FILE *openCsvFile(const char *filePath, const char *mode){
 
 }
 
-
-
 char *isUserInDb(const char *name,const char *surname){
     char *to_compare;
     char *token;
@@ -74,7 +72,6 @@ char *isUserInDb(const char *name,const char *surname){
     return NULL;
 
 }
-
 
 FILE *findUserInDb(const char *name, const char *surname){
 
@@ -159,47 +156,34 @@ bool isIbanInDb(const char *IBan){
 
     }
 
-
     token = NULL;
     free(token);
     return 0;
 }
 
+void getRowByIban(const char *IBan, char *buffer){
 
-
-void updateUserToDb(const char *name, const char *surname, const char *to_update){
-
-    char *row;
-    char buffer[CHAR_MAX];
-
-    row = isUserInDb(name,surname);
-
-    if (row == NULL) {
-        printf("Error while Updating User");
-        return;
-    }
-
-    if (strcmp(row,to_update)==0){
-        printf("Nothing to update");
-        return;
-    }
-
-    printf("Updating user");
+    char *token;
+    char row[200];
 
     FILE *file_pointer;
+    file_pointer = openCsvFile("..\\Data Base\\Accounts.csv","r");
 
-    file_pointer = findUserInDb(name,surname);
+    while(fgets(row,200,file_pointer)!=NULL){
+        strcpy(buffer,row);
+        token = strtok(row,",");
 
-    fgets(buffer,CHAR_MAX,file_pointer);
-    printf("%s",buffer);
+        if (strcmp(token,IBan) == 0){
+            printf("Account Found\n");
+            fclose(file_pointer);
+            return;
+        }
 
+    }
 
-
-
-
-
+    strcpy(buffer,"ERROR");
+    printf("Iban not in Data Base");
 }
-
 
 void addAccountToDb(struct Account* temp){
     FILE *file_pointer;
@@ -220,8 +204,6 @@ void addUserToDb(struct User* temp){
     fclose(file_pointer);
 
 }
-
-
 
 //FILE UPDATE
 
@@ -245,19 +227,9 @@ void updateAccountFileOriginal(){
     {
         fclose(file_input);
         fclose(file_output);
-        printf("Completed?");
     }
-    else
-    {
-        fclose(file_input);
-        fclose(file_output);
-        printf("Error?");
-    }
-
-
 
 }
-
 
 void updateUsersFileOriginal(){
     FILE* file_input;
@@ -278,20 +250,13 @@ void updateUsersFileOriginal(){
     {
         fclose(file_input);
         fclose(file_output);
-        printf("Completed?");
-    }
-    else
-    {
-        fclose(file_input);
-        fclose(file_output);
-        printf("Error?");
+
     }
 
 
 
 }
 
-//Prototype
 void modifyAccountTempFile(const struct Account *Account,const char *old_IBAN){
 
     FILE* file_input;
@@ -299,16 +264,17 @@ void modifyAccountTempFile(const struct Account *Account,const char *old_IBAN){
     char buffer[100];
     char row[100];
     char *token;
-
+    printf("Dada\n");
     file_input = openCsvFile("../Data Base/Accounts.csv","r");
-
     file_output = openCsvFile("../Data Base/Accounts_Temp.csv","w");
-
+    printf("Dada\n");
 
     while (fgets(row, sizeof buffer, file_input) != NULL)
     {
+        printf("Dada\n");
         strcpy(buffer,row);
         token = strtok(buffer,",");
+        printf("Dada\n");
 
         //CONSTRUCT THE STRING
         if(!strcmp(token,Account->IBan)||!strcmp(token,old_IBAN)){
@@ -332,8 +298,6 @@ void modifyAccountTempFile(const struct Account *Account,const char *old_IBAN){
         fclose(file_output);
         printf("Error?\n");
     }
-
-
 
 }
 
@@ -424,7 +388,6 @@ void deleteAccount(const char *IBan,struct Account **Account,struct User *User){
     modifyUserTempFile(User);
     updateUsersFileOriginal();
     updateAccountFileOriginal();
-
 
 
     //MAY CAUSE ERRORS

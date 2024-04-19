@@ -66,7 +66,6 @@ char *generateIBan(){
 
 
     IBan_random_letters = (char*)malloc(sizeof(char) * 6);
-    printf("Haha not here bro");
     if (IBan_random_letters == NULL){
         printf("Couldn't find space in memory\n");
         return NULL;  //Error code

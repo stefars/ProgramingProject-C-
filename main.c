@@ -19,7 +19,6 @@ int main() {
     char option[50];
     char *opcode,*name,*surname;
 
-
     char is_running;
     char choice = '0';
 
@@ -57,6 +56,7 @@ int main() {
                             break;
                         //clean screen;
                         printMenuInterface(Session->User->name, Session->User->surname);
+
 
                         getChoiceFunction(input_buffer,option);
 
@@ -120,84 +120,61 @@ int main() {
 
                             case '3':
                                 //Edit Account select Account
-                                while(1){
-                                    if(!strcmp(option,"back"))
-                                        break;
-                                    printf("Enter Account:\n");
-                                    int index = getAccountByIBAN(input_buffer,option,Session);
+                                    while (1) {
+                                        editAccountAskIBAN();
 
-                                    if(strcmp(option,"ERROR") == 0)
-                                        continue;
-                                    if(!strcmp(option,"back"))
-                                       break;
-
-                                    //Edit Account Menu
-                                    while(1) {
-                                        if(!strcmp(option,"return"))
+                                        if (!strcmp(option, "back")) {
                                             break;
+                                        }
 
-                                        printf("[1] Edit Currency\n[2] Edit IBAN\n[3] Delete\n[4] Return\n");
-                                        getChoiceFunction(input_buffer, option);
 
-                                        if (strcmp(option, "ERROR") == 0) {
+                                        printf("Enter Account:\n");
+                                        int index = getAccountByIBAN(input_buffer, option, Session);
+
+                                        if (!strcmp(option, "ERROR")) {
+                                            continue;
+                                        }
+                                        if (!strcmp(option, "back")) {
                                             continue;
                                         }
 
-                                        choice = *option;
+                                        printf("%s\n", option);
 
-                                        switch (choice){
+                                        while (strcmp(option, "return") != 0) {
+                                            printf("I'm HERE\n");
+                                            editAccountMenu(Session->Accounts[index]);
+                                            getChoiceFunction(input_buffer, option);
 
-                                            case '1':
-                                                //Currency Edit;
-                                                editCurrency(input_buffer,option,Session->Accounts[index]);
-                                                if (strcmp(option, "ERROR") == 0) {
-                                                    continue;
-                                                }
-                                                if (strcmp(option, "back") == 0) {
-                                                    continue;
-                                                }
-
-                                                break;
-                                            case '2':
-                                                //Edit IBAN
-                                                editIBAN(input_buffer,option,Session->Accounts[index]);
-                                                if (strcmp(option, "ERROR") == 0) {
-                                                    continue;
-                                                }
-                                                if (strcmp(option, "back") == 0) {
-                                                    continue;
-                                                }
-
-                                                break;
-                                            case '3':
-                                                //Delete Account.
-                                                deleteAccount(Session->Accounts[index]->IBan,&Session->Accounts[index],Session->User);
-                                                if (strcmp(option, "ERROR") == 0) {
-                                                    continue;
-                                                }
-                                                if (strcmp(option, "back") == 0) {
-                                                    continue;
-                                                }
-
-
-                                                break;
-                                            case '4':
-                                                strcpy(option,"return");
+                                            if (!strcmp(option, "ERROR") || !strcmp(option, "back")) {
                                                 continue;
+                                            }
 
-                                            default:
-                                                printf("No clue");
-                                                break;
+                                            switch (*option) {
+                                                case '1':
+                                                    editCurrency(input_buffer, option, Session->Accounts[index]);
+                                                    break;
+
+                                                case '2':
+                                                    editIBAN(input_buffer, option, Session->Accounts[index]);
+                                                    break;
+
+                                                case '3':
+                                                    deleteAccount(Session->Accounts[index]->IBan, &Session->Accounts[index], Session->User);
+                                                    strcpy(option, "return");
+                                                    break;
+
+                                                case '4':
+                                                    strcpy(option, "return");
+                                                    break;
+
+                                                default:
+                                                    printf("Invalid choice\n");
+                                                    break;
+                                            }
                                         }
 
-
-                                        break;
                                     }
 
-
-
-                                    break;
-                                }
 
                                 break;
 
@@ -220,7 +197,13 @@ int main() {
 
                             case '5':
 
-                                printf("Transfer money (WIP)\n");
+                                transferMoney(input_buffer,option,Session);
+                                if(strcmp(option,"ERROR") == 0)
+                                    continue;
+
+                                if(strcmp(option,"back") == 0){
+                                    break;
+                                }
 
                                 break;
 

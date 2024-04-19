@@ -9,7 +9,6 @@
 #include "../Headers/file_manip.h"
 
 
-
 void freeUser(struct User *User){
     free(User->surname);
     free(User->name);
@@ -31,12 +30,9 @@ void freeAccount(struct Account *Account){
 
 }
 
-
-
 struct Account *createAccountInstance(const char* id){
 
     struct Account *temp;
-    printf("I'M HERE createAccountInstance");
     temp = (struct Account*)malloc(sizeof(struct Account));
 
 
@@ -91,19 +87,6 @@ void addAccountToSession(struct Account *temp,struct Session *Session){
     Session->Accounts[Session->User->nr_accounts-1] = temp;
 
 }
-
-
-
-void createUserAccount(const char *user_id){
-    struct Account *New_Account;
-
-    New_Account = createAccountInstance(user_id);
-
-    addAccountToDb(New_Account);
-
-    freeAccount(New_Account);
-    //Free Amount also?
-}  //delete?
 
 void createNewUser(char* name, char* surname){
 

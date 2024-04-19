@@ -21,6 +21,8 @@ char* isUserInDb(const char*name,const char*surname);
 
 bool isIbanInDb(const char *IBan);
 
+void getRowByIban(const char *IBan, char *buffer);
+
 void addSessionToDb(struct Session* temp);
 
 void addAccountToDb(struct Account* temp);
@@ -33,6 +35,8 @@ void addUserToDb(struct User* temp);
 
 
 //TEMPORARY STORED HERE
+
+void modifyAnyAccountTempFile(const char *IBan,const char *id_user,const char currency,const long long amount);
 
 void updateAccountFileOriginal();
 void modifyAccountTempFile(const struct Account *Account,const char *old_IBAN);

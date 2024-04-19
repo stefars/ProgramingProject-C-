@@ -6,49 +6,38 @@
 #include <string.h>
 #include <ctype.h>
 
-char *removeDubSpaces(char *input_buffer){
+void removeDubSpaces(char *input_buffer){
 
 
-    short length = strlen(input_buffer),pos=0;
-    char flag = '1';
+    short length = strlen(input_buffer);
+    short pos = 0;
+    char prev_char = ' ';
 
-    char *output_buffer = (char *)malloc((length + 1) * sizeof(char));
-    if (output_buffer == NULL) {
-        printf("COULD NOT ALLOCATE MEMORY\n");
-        return NULL;
-    }
 
-    //Remove spaces from beginning and inside
-    for(short i = 0;i < length;i++){
+    for (short i = 0; i < length; i++) {
+        char currentChar = input_buffer[i];
 
-        if(isspace(input_buffer[i])) {
-
-            if (flag == '0') {
-                flag = '1';
-                output_buffer[pos] = input_buffer[i];
-                pos++;
-
+        if (isspace(currentChar)) {
+            if (!isspace(prev_char)) {
+                input_buffer[pos++] = ' ';
             }
-            continue;
+        } else {
+            input_buffer[pos++] = currentChar;
         }
 
-
-        output_buffer[pos] = input_buffer[i];
-        flag = '0';
-        pos++;
-
-
+        prev_char = currentChar;
     }
 
-    output_buffer[pos-1] = '\0';
+    // Null-terminate the output string
+    input_buffer[pos] = '\0';
 
-    //Remove spaces at the end
-    if(isspace(output_buffer[pos-2])){
-        output_buffer[pos-2] = '\0';
+    // Trim trailing spaces
+    while (pos > 0 && isspace(input_buffer[pos - 1])) {
+        pos--;
     }
 
+    input_buffer[pos] = '\0';
 
-    return output_buffer;
 }
 
 char isNameValid(const char *name){

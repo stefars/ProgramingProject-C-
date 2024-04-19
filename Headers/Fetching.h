@@ -6,6 +6,8 @@
 #define PROGRAMING_PROJECT_FETCHING_H
 
 
+struct Account **fetchAccountsData(const char* user_id,int nr_accounts);
+
 struct Session *fetchUserData(char* name,char* surname);
 
 
