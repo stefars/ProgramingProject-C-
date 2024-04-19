@@ -7,7 +7,6 @@
 
 char *removeDubSpaces(char *input_buffer);
 
-char isNameValid(const char *name);
 
 
 

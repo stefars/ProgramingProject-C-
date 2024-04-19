@@ -23,17 +23,19 @@ void printAddAccountInterfaceFailed(char code[3]);
 
 void printAddMoneySuccessfulInterface();
 
-void printAddMoneyMoneyInterface();
+void printAskAmount();
 
 void printAddMoneyIBanInterface();
 
-void editAccountAskIBAN();
+void printAskOwnedIBAN();
 
-void editAccountMenu(struct Account *Account);
+void printEditAccountMenu(struct Account *Account);
 
-void editAccountCurrency();
+void printEditAccountCurrency();
 
-void editAccountIBAN();
+void printEditAccountIBAN();
+
+void printAskReceiverIban();
 
 
 

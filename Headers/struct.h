@@ -8,7 +8,7 @@ struct User {
     char* id;
     char* name;
     char* surname;
-    int nr_accounts;   //REMEMBER THIS
+    short nr_accounts;   //REMEMBER THIS
 };
 
 struct Account {

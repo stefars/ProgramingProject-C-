@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "Headers/structures.h"
+#include "Headers/structures_operations.h"
 #include "Headers/file_manip.h"
 #include "Headers/UI.h"
 #include "Headers/generate.h"
-#include "Headers/Fetching.h"
-#include "Headers/Main Functions.h"
+#include "Headers/fetching.h"
+#include "Headers/main_functions.h"
 
 
 
@@ -25,6 +25,7 @@ int main() {
 
     while(1) {
         strcpy(option,"Mirel Rodrigo");
+
         //login interface
         printLoginInterface();
 
@@ -56,9 +57,7 @@ int main() {
                             break;
                         //clean screen;
                         printMenuInterface(Session->User->name, Session->User->surname);
-
-
-                        getChoiceFunction(input_buffer,option);
+                        getChoice(input_buffer, option);
 
                         if(strcmp(option,"ERROR") == 0){
                             continue;
@@ -81,26 +80,12 @@ int main() {
                                     printAddAccountInterfaceAsk();
 
                                     // Need Changed;
-                                    scanf(" %c", &choice);
+                                    getYesNo(input_buffer,option);
 
-                                    switch (choice) {
+                                    switch (*option) {
 
                                         case 'Y': {
-                                            struct Account *New_Account;
-
-                                            New_Account = createAccountInstance(Session->User->id);
-
-                                            Session->User->nr_accounts++;
-                                            addAccountToDb(New_Account);
-                                            addAccountToSession(New_Account, Session);
-
-                                            modifyUserTempFile(Session->User);
-                                            updateUsersFileOriginal();
-
-                                            printAddAccountInterface();
-
-                                            //sleep?
-                                            printAddAccountInterfaceSuccessful(New_Account);
+                                            addAccount(Session);
                                             break;
                                         }
 
@@ -115,35 +100,24 @@ int main() {
                                             break;
                                     }
 
-
                                 }
-
+                            break;
                             case '3':
                                 //Edit Account select Account
-                                    while (1) {
-                                        editAccountAskIBAN();
+                                    while (strcmp(option,"back")!= 0) {
+                                        printAskOwnedIBAN();
 
-                                        if (!strcmp(option, "back")) {
-                                            break;
-                                        }
-
-
-                                        printf("Enter Account:\n");
                                         int index = getAccountByIBAN(input_buffer, option, Session);
 
-                                        if (!strcmp(option, "ERROR")) {
-                                            continue;
-                                        }
-                                        if (!strcmp(option, "back")) {
+                                        if (!strcmp(option, "ERROR") || !strcmp(option, "back")) {
                                             continue;
                                         }
 
-                                        printf("%s\n", option);
 
                                         while (strcmp(option, "return") != 0) {
-                                            printf("I'm HERE\n");
-                                            editAccountMenu(Session->Accounts[index]);
-                                            getChoiceFunction(input_buffer, option);
+
+                                            printEditAccountMenu(Session->Accounts[index]);
+                                            getChoice(input_buffer, option);
 
                                             if (!strcmp(option, "ERROR") || !strcmp(option, "back")) {
                                                 continue;
@@ -182,7 +156,7 @@ int main() {
 
                                 while (1) {
 
-                                    addMoneyFunction(input_buffer,option,Session);
+                                    addMoney(input_buffer, option, Session);
 
                                     if(strcmp(option,"ERROR") == 0)
                                         continue;
@@ -228,7 +202,7 @@ int main() {
                     break;
                 }
                 case '2': {
-                    //COULD BE A FUNCTION
+
                     printf("You are making a new user\n");
 
                     if (isUserInDb(name, surname)) {

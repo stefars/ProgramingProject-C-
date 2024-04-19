@@ -1,14 +1,11 @@
 //
 // Created by hidro on 3/27/2024.
 //
-#include "../Headers/struct.h"
+
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
 
-
-
-//FREEING TOKEN IN THIS FUNCTION YIELSD ERROR?
 char *generateUserId(const char* name,const char* surname){
 
     char *to_generate,*seed;

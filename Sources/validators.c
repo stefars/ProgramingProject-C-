@@ -1,102 +1,26 @@
 //
-// Created by hidro on 4/15/2024.
+// Created by hidro on 4/19/2024.
 //
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
-#include "../Headers/String Operations.h"
+#include <unistd.h>
+
 
 #define MAX_NAME 50
 
-void getCredentials(char *input_buffer,char **name, char **surname, char **opcode){
+char validateName(const char *name){
+    int i = 0;
+    while(*(i+name)) {
 
-    int arguments = 1,buffer_length;
-
-    buffer_length = strlen(input_buffer);
-
-    for (int i = 0; i < buffer_length; i++){
-
-        if (*(input_buffer+i) == ' ')
-            arguments++;
-
-    }
-
-    *opcode = strtok(input_buffer," ");
-
-    if(strcmp(*opcode,"exit")==0){
-        if (arguments > 1){
-            printf("Exit command requires no arguments.\n");
-            *opcode = NULL;
-            return;
+        //Check if char is a letter
+        if ((*(i+name)<'A')||(*(i+name)>'z')||(((*(i+name)>'Z') && (*(i+name)<'a')))){
+            return 0;
         }
-        return;
-
+        i++;
     }
-
-    if(arguments != 3){
-
-        *opcode = NULL;
-
-        if(arguments < 3){
-            printf("Not enough arguments, 3 needed.\n");
-            return;
-        }
-
-        printf("Too many arguments,only 3 needed.\n");
-        return;
-
-    }
-
-
-    *name = strtok(NULL," ");
-
-    *surname = strtok(NULL,"\n");
-
-
-
-}
-
-void getInput(char *buffer,char *option){
-
-    // Used for: menu choice, amount to transfer (Input owned IBAN, Input Amount), transfer between accounts
-    // (Input owned IBAN, Input other IBAN, Input Amount)
-    // Probably for edit also?
-
-    //Should be only one string (if it has multiple it's invalid, request again.
-
-    int arguments = 1,buffer_length;
-
-    strcpy(option,"ERROR");
-
-    buffer_length = strlen(buffer);
-
-    if (buffer_length==0){
-        printf("No input detected\n");
-        return;
-    }
-
-    for (int i = 0; i < buffer_length; i++){
-
-        if (isspace(*(buffer+i)))
-            arguments++;
-    }
-
-
-    if(arguments != 1){
-
-        if(arguments < 1){
-            printf("Not enough arguments, 1 needed.\n");
-            return;
-        }
-
-        printf("Too many arguments,only 1 needed.\n");
-        return;
-    }
-
-    strcpy(option,buffer);
-
+    return 1;
 
 }
 
@@ -108,6 +32,7 @@ void verifyCredentials(char *name, char *surname, char **opcode){
 
     if ((strcmp(*opcode,"login") != 0) && (strcmp(*opcode,"register") != 0)){
         printf("Invalid command\n");
+        sleep(1);
         *opcode = NULL;
         return;
 
@@ -115,12 +40,14 @@ void verifyCredentials(char *name, char *surname, char **opcode){
 
     if(strlen(name) > MAX_NAME  || strlen(surname) > MAX_NAME){
         printf("Name or surname too long\n");
+        sleep(1);
         *opcode = NULL;
         return;
     }
 
-    if(!(isNameValid(name) && isNameValid(surname))){
+    if(!(validateName(name) && validateName(surname))){
         printf("Name or surname contains symbols, numbers, or non-recognized characters\n");
+        sleep(1);
         *opcode = NULL;
         return;
     }
@@ -141,11 +68,13 @@ unsigned long long validateAmount(char *option){
 
     if(strcmp(option,"0")==0){
         printf("Can not add nothing.");
+        sleep(1);
         return 0;
     }
 
     if(length > 19){
         printf("Invalid amount. I'm sure you don't have that much.");
+        sleep(1);
         strcpy(option,"ERROR");
         return 0;
 
@@ -154,6 +83,7 @@ unsigned long long validateAmount(char *option){
     for (int i = 0; i < length; i++){
         if(!isdigit(option[i])){
             printf("Input needs to be a positive integer.\n");
+            sleep(1);
             strcpy(option,"ERROR");
             return 0;
         }
@@ -187,6 +117,24 @@ void validateChoice(char *option){
 
     strcpy(option,"ERROR");
     printf("Please select an option from 1 to %d\n",strlen(choices)-1);
+}
+
+void validateYesNo(char *option){
+
+    if(!strcmp(option,"Y") || !strcmp(option,"y")){
+        strcpy(option,"Y");
+        return;
+    }
+
+    if(!strcmp(option,"N") || !strcmp(option,"n")){
+        strcpy(option,"N");
+        return;
+    }
+
+    strcpy(option,"ERROR");
+
+    printf("Invalid choice\n");
+
 }
 
 void validateIBAN(char *option){
@@ -255,8 +203,3 @@ void validateEditIBAN(char *option){
 
 
 }
-
-
-
-//UTILITY
-

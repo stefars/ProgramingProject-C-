@@ -67,8 +67,8 @@ build CMakeFiles/Programing_Project.dir/Sources/file_manip.c.obj: C_COMPILER__Pr
   OBJECT_DIR = CMakeFiles\Programing_Project.dir
   OBJECT_FILE_DIR = CMakeFiles\Programing_Project.dir\Sources
 
-build CMakeFiles/Programing_Project.dir/Sources/strucutres.c.obj: C_COMPILER__Programing_Project_unscanned_Debug E$:/ProgramingProject-C-/Sources/strucutres.c || cmake_object_order_depends_target_Programing_Project
-  DEP_FILE = CMakeFiles\Programing_Project.dir\Sources\strucutres.c.obj.d
+build CMakeFiles/Programing_Project.dir/Sources/structures_operations.c.obj: C_COMPILER__Programing_Project_unscanned_Debug E$:/ProgramingProject-C-/Sources/structures_operations.c || cmake_object_order_depends_target_Programing_Project
+  DEP_FILE = CMakeFiles\Programing_Project.dir\Sources\structures_operations.c.obj.d
   FLAGS = -g -std=gnu2x -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\Programing_Project.dir
   OBJECT_FILE_DIR = CMakeFiles\Programing_Project.dir\Sources
@@ -79,26 +79,32 @@ build CMakeFiles/Programing_Project.dir/Sources/generate.c.obj: C_COMPILER__Prog
   OBJECT_DIR = CMakeFiles\Programing_Project.dir
   OBJECT_FILE_DIR = CMakeFiles\Programing_Project.dir\Sources
 
-build CMakeFiles/Programing_Project.dir/Sources/Fetching.c.obj: C_COMPILER__Programing_Project_unscanned_Debug E$:/ProgramingProject-C-/Sources/Fetching.c || cmake_object_order_depends_target_Programing_Project
-  DEP_FILE = CMakeFiles\Programing_Project.dir\Sources\Fetching.c.obj.d
+build CMakeFiles/Programing_Project.dir/Sources/fetching.c.obj: C_COMPILER__Programing_Project_unscanned_Debug E$:/ProgramingProject-C-/Sources/fetching.c || cmake_object_order_depends_target_Programing_Project
+  DEP_FILE = CMakeFiles\Programing_Project.dir\Sources\fetching.c.obj.d
   FLAGS = -g -std=gnu2x -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\Programing_Project.dir
   OBJECT_FILE_DIR = CMakeFiles\Programing_Project.dir\Sources
 
-build CMakeFiles/Programing_Project.dir/Sources/String_Operations.c.obj: C_COMPILER__Programing_Project_unscanned_Debug E$:/ProgramingProject-C-/Sources/String$ Operations.c || cmake_object_order_depends_target_Programing_Project
-  DEP_FILE = CMakeFiles\Programing_Project.dir\Sources\String_Operations.c.obj.d
+build CMakeFiles/Programing_Project.dir/Sources/string_operations.c.obj: C_COMPILER__Programing_Project_unscanned_Debug E$:/ProgramingProject-C-/Sources/string_operations.c || cmake_object_order_depends_target_Programing_Project
+  DEP_FILE = CMakeFiles\Programing_Project.dir\Sources\string_operations.c.obj.d
   FLAGS = -g -std=gnu2x -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\Programing_Project.dir
   OBJECT_FILE_DIR = CMakeFiles\Programing_Project.dir\Sources
 
-build CMakeFiles/Programing_Project.dir/Sources/User_Input.c.obj: C_COMPILER__Programing_Project_unscanned_Debug E$:/ProgramingProject-C-/Sources/User$ Input.c || cmake_object_order_depends_target_Programing_Project
-  DEP_FILE = CMakeFiles\Programing_Project.dir\Sources\User_Input.c.obj.d
+build CMakeFiles/Programing_Project.dir/Sources/user_input.c.obj: C_COMPILER__Programing_Project_unscanned_Debug E$:/ProgramingProject-C-/Sources/user_input.c || cmake_object_order_depends_target_Programing_Project
+  DEP_FILE = CMakeFiles\Programing_Project.dir\Sources\user_input.c.obj.d
   FLAGS = -g -std=gnu2x -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\Programing_Project.dir
   OBJECT_FILE_DIR = CMakeFiles\Programing_Project.dir\Sources
 
-build CMakeFiles/Programing_Project.dir/Sources/Main_Functions.c.obj: C_COMPILER__Programing_Project_unscanned_Debug E$:/ProgramingProject-C-/Sources/Main$ Functions.c || cmake_object_order_depends_target_Programing_Project
-  DEP_FILE = CMakeFiles\Programing_Project.dir\Sources\Main_Functions.c.obj.d
+build CMakeFiles/Programing_Project.dir/Sources/main_functions.c.obj: C_COMPILER__Programing_Project_unscanned_Debug E$:/ProgramingProject-C-/Sources/main_functions.c || cmake_object_order_depends_target_Programing_Project
+  DEP_FILE = CMakeFiles\Programing_Project.dir\Sources\main_functions.c.obj.d
+  FLAGS = -g -std=gnu2x -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\Programing_Project.dir
+  OBJECT_FILE_DIR = CMakeFiles\Programing_Project.dir\Sources
+
+build CMakeFiles/Programing_Project.dir/Sources/validators.c.obj: C_COMPILER__Programing_Project_unscanned_Debug E$:/ProgramingProject-C-/Sources/validators.c || cmake_object_order_depends_target_Programing_Project
+  DEP_FILE = CMakeFiles\Programing_Project.dir\Sources\validators.c.obj.d
   FLAGS = -g -std=gnu2x -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\Programing_Project.dir
   OBJECT_FILE_DIR = CMakeFiles\Programing_Project.dir\Sources
@@ -111,7 +117,7 @@ build CMakeFiles/Programing_Project.dir/Sources/Main_Functions.c.obj: C_COMPILER
 #############################################
 # Link the executable Programing_Project.exe
 
-build Programing_Project.exe: C_EXECUTABLE_LINKER__Programing_Project_Debug CMakeFiles/Programing_Project.dir/main.c.obj CMakeFiles/Programing_Project.dir/Sources/UI.c.obj CMakeFiles/Programing_Project.dir/Sources/file_manip.c.obj CMakeFiles/Programing_Project.dir/Sources/strucutres.c.obj CMakeFiles/Programing_Project.dir/Sources/generate.c.obj CMakeFiles/Programing_Project.dir/Sources/Fetching.c.obj CMakeFiles/Programing_Project.dir/Sources/String_Operations.c.obj CMakeFiles/Programing_Project.dir/Sources/User_Input.c.obj CMakeFiles/Programing_Project.dir/Sources/Main_Functions.c.obj
+build Programing_Project.exe: C_EXECUTABLE_LINKER__Programing_Project_Debug CMakeFiles/Programing_Project.dir/main.c.obj CMakeFiles/Programing_Project.dir/Sources/UI.c.obj CMakeFiles/Programing_Project.dir/Sources/file_manip.c.obj CMakeFiles/Programing_Project.dir/Sources/structures_operations.c.obj CMakeFiles/Programing_Project.dir/Sources/generate.c.obj CMakeFiles/Programing_Project.dir/Sources/fetching.c.obj CMakeFiles/Programing_Project.dir/Sources/string_operations.c.obj CMakeFiles/Programing_Project.dir/Sources/user_input.c.obj CMakeFiles/Programing_Project.dir/Sources/main_functions.c.obj CMakeFiles/Programing_Project.dir/Sources/validators.c.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\Programing_Project.dir

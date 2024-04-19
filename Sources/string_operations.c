@@ -1,8 +1,7 @@
 //
 // Created by hidro on 4/15/2024.
 //
-#include <stdlib.h>
-#include <stdio.h>
+
 #include <string.h>
 #include <ctype.h>
 
@@ -40,16 +39,5 @@ void removeDubSpaces(char *input_buffer){
 
 }
 
-char isNameValid(const char *name){
-    int i = 0;
-    while(*(i+name)) {
 
-        //Check if char is a letter
-        if ((*(i+name)<'A')||(*(i+name)>'z')||(((*(i+name)>'Z') && (*(i+name)<'a')))){
-            return 0;
-        }
-        i++;
-    }
-    return 1;
 
-}

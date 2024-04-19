@@ -4,12 +4,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "../Headers/String Operations.h"
-#include "../Headers/User Input.h"
+#include "../Headers/string_operations.h"
+#include "../Headers/user_input.h"
 #include "../Headers/struct.h"
 #include "../Headers/UI.h"
 #include "../Headers/file_manip.h"
-#include "../Headers/structures.h"
+#include "../Headers/structures_operations.h"
+#include "../Headers/validators.h"
 
 char loginFunction(char **opcode, char**name, char **surname,char *buffer){
 
@@ -18,7 +19,6 @@ char loginFunction(char **opcode, char**name, char **surname,char *buffer){
         fgets(buffer, 150, stdin);
 
         printf("%s\n",buffer);
-
         removeDubSpaces(buffer);
 
         getCredentials(buffer,name,surname,opcode);
@@ -54,7 +54,7 @@ char loginFunction(char **opcode, char**name, char **surname,char *buffer){
 
 }
 
-void addMoneyFunction(char *buffer,char *option,struct Session *Session){
+void addMoney(char *buffer, char *option, struct Session *Session){
 
     printAddMoneyIBanInterface();
 
@@ -94,7 +94,7 @@ void addMoneyFunction(char *buffer,char *option,struct Session *Session){
 
     }
 
-    printAddMoneyMoneyInterface();
+    printAskAmount();
 
 
     // GET AMOUNT
@@ -127,7 +127,7 @@ void addMoneyFunction(char *buffer,char *option,struct Session *Session){
     printAddMoneySuccessfulInterface();
 }
 
-void getChoiceFunction(char *buffer,char *option){
+void getChoice(char *buffer, char *option){
 
 
     fgets(buffer, 150, stdin);
@@ -145,13 +145,46 @@ void getChoiceFunction(char *buffer,char *option){
 
 }
 
+void getYesNo(char *buffer, char *option){
+
+    fgets(buffer, 150, stdin);
+
+    removeDubSpaces(buffer);
+
+    getInput(buffer,option);
+
+    if(strcmp(option,"ERROR")==0){
+        return;
+    }
+
+    validateYesNo(option);
+}
+
+void addAccount(struct Session *Session){
+
+    struct Account *New_Account;
+
+    New_Account = createAccountInstance(Session->User->id);
+
+    Session->User->nr_accounts++;
+    addAccountToDb(New_Account);
+    addAccountToSession(New_Account, Session);
+
+    modifyUserTempFile(Session->User);
+    updateUsersFileOriginal();
+
+    printAddAccountInterface();
+
+    printAddAccountInterfaceSuccessful(New_Account);
+
+}
+
 int getAccountByIBAN(char *buffer,char *option,const struct Session *Session){
 
 
     fgets(buffer, 150, stdin);
     removeDubSpaces(buffer);
     getInput(buffer,option);
-
 
     validateIBAN(option);
 
@@ -163,12 +196,14 @@ int getAccountByIBAN(char *buffer,char *option,const struct Session *Session){
         return -1;
     }
 
-
+    int nr = Session->User->nr_accounts;
 
     //Find Account Index
-    for(int i = 0; i < Session->User->nr_accounts;i++){
-        if(Session->Accounts[i] == NULL)
+    for(int i = 0; i < nr;i++){
+        if(Session->Accounts[i] == NULL){
+            nr++;
             continue;
+        }
         if(strcmp(Session->Accounts[i]->IBan,option) == 0){
             return i;
         }
@@ -184,7 +219,7 @@ int getAccountByIBAN(char *buffer,char *option,const struct Session *Session){
 
 void editCurrency(char *buffer,char *option,struct Account *Account){
 
-    editAccountCurrency();
+    printEditAccountCurrency();
 
     fgets(buffer, 150, stdin);
     removeDubSpaces(buffer);
@@ -281,7 +316,7 @@ void exchangeValue(unsigned long long *amount,const char coin,const char Receive
 
 void editIBAN(char *buffer, char *option,struct Account *Account){
 
-    editAccountIBAN();
+    printEditAccountIBAN();
 
     fgets(buffer, 150, stdin);
     removeDubSpaces(buffer);
@@ -315,10 +350,10 @@ void editIBAN(char *buffer, char *option,struct Account *Account){
 }
 
 
-//Over flow error?
+//Overflow error?
 void transferMoney(char *buffer,char *option,struct Session *Session){
 
-    printf("Input an owned Account IBAN: \n");
+    printAskOwnedIBAN();
 
     int acc1 = getAccountByIBAN(buffer,option,Session);
 
@@ -327,7 +362,7 @@ void transferMoney(char *buffer,char *option,struct Session *Session){
     }
 
     //Acc1 Obtained
-    printf("Input an Account IBAN to send money: \n");
+    printAskReceiverIban();
 
     fgets(buffer, 150, stdin);
     removeDubSpaces(buffer);
@@ -345,12 +380,15 @@ void transferMoney(char *buffer,char *option,struct Session *Session){
         return;
     }
 
-
-    int acc2 = -1;
+    short nr = Session->User->nr_accounts;
+    short acc2 = -1;
     //Find Account Index
-    for(int i = 0; i < Session->User->nr_accounts;i++){
+    for(short i = 0; i < nr;i++){
         if(Session->Accounts[i] == NULL)
+        {
+            nr++;
             continue;
+        }
         if(strcmp(Session->Accounts[i]->IBan,option) == 0){
             acc2 = i;
         }
@@ -392,7 +430,7 @@ void transferMoney(char *buffer,char *option,struct Session *Session){
             return;
         }
 
-        printf("Enter Amount: \n");
+        printAskAmount();
 
         fgets(buffer, 150, stdin);
         removeDubSpaces(buffer);
@@ -444,7 +482,7 @@ void transferMoney(char *buffer,char *option,struct Session *Session){
 
     }
 
-    printf("Enter Amount: \n");
+    printAskAmount();
 
     fgets(buffer, 150, stdin);
     removeDubSpaces(buffer);

@@ -2,9 +2,12 @@
 // Created by hidro on 3/27/2024.
 //
 #include <stdio.h>
-#include "../Headers/structures.h"
+#include "../Headers/structures_operations.h"
+#include <stdlib.h>
+#include <unistd.h>
 
 void printLoginInterface(){
+    system("cls");
     printf( "_*__*__*___*B_A_N_K*__*__*__*__*_\n"
             "                               \n"
             "        Welcome to BANK        \n"
@@ -22,6 +25,8 @@ void printLoginInterface(){
 
 void printMenuInterface(const char *name,const char *surname){
 
+    system("cls");
+
     printf("_*__*__*___*B_A_N_K*__*__*__*__*_\n"
            " Hello!         \n"
            "                              \n"
@@ -38,6 +43,8 @@ void printMenuInterface(const char *name,const char *surname){
 
 void printShowAccountsInterface(struct Session *Session){
 
+    char temp;
+    system("cls");
     printf("_*__*__*___*B_A_N_K*__*__*__*__*_\n\n"
     );
     int nr = Session ->User ->nr_accounts;
@@ -47,35 +54,43 @@ void printShowAccountsInterface(struct Session *Session){
             continue;}
         else
             printf("%s %c %llu\n\n",Session->Accounts[i]->IBan,*Session->Accounts[i]->coin,Session->Accounts[i]->amount);
+
     }
+    scanf(" %c",temp);
 }
 
 void printAddAccountInterfaceAsk(){
 
+    system("cls");
     printf("_*__*__*___*B_A_N_K*__*__*__*__*_\n"
            "          \n"
            "       Generate new account?"
            "\n"
            "   Yes (Y)              Return (N)          "
            "\n\n\n");
+
 }
 
 void printAddAccountInterface(){
-
+    system("clr");
     printf("_*__*__*___*B_A_N_K*__*__*__*__*_\n"
            "          \n"
            "   Creating Default Account... \n"
            "\n\n\n");
+    sleep(1);
 }
 
 
 void printAddAccountInterfaceSuccessful(struct Account *Account){
+    system("clr");
+    char temp;
     printf("_*__*__*___*B_A_N_K*__*__*__*__*_\n"
            "\n"
            "   Account %s %c %llu  \n"
            "\n"
            "       created successfully!    "
            "\n\n\n",Account->IBan,*Account->coin,Account->amount);
+    scanf(" %c",temp);
 }
 
 
@@ -88,14 +103,15 @@ void printAddAccountInterfaceFailed(char code[3]){
 
 
 void printAddMoneyIBanInterface(){
-
+    system("clr");
     printf("_*__*__*___*B_A_N_K*__*__*__*__*_\n"
            "Insert an owned IBAN:\n\n"
            "Return to menu by typing 'back'\n\n");
 
 }
 
-void printAddMoneyMoneyInterface() {
+void printAskAmount() {
+    system("clr");
     printf("_*__*__*___*B_A_N_K*__*__*__*__*_\n"
            "Insert amount:\n\n"
            "Return to menu by typing 'back'\n");
@@ -110,34 +126,48 @@ void printAddMoneySuccessfulInterface() {
 }
 
 
-void editAccountAskIBAN() {
+void printAskOwnedIBAN() {
+    system("clr");
     printf("_*__*__*___*B_A_N_K*__*__*__*__*_\n"
            "Enter an owned IBAN:\n\n\n"
            "Type 'back' to return\n");
 }
 
-void editAccountMenu(struct Account *Account) {
-
+void printEditAccountMenu(struct Account *Account) {
+    system("clr");
     printf("_*__*__*___*B_A_N_K*__*__*__*__*_\n"
-           "Currently editing account:\n"
-           "%s\n"
-           "[1] Edit Currency\n[2] Edit IBAN\n[3] Delete\n[4] Return\n\n\n",Account->IBan);
+           "Currently editing account:\n\n"
+           "%s %s %llu"
+           "[1] Edit Currency\n[2] Edit IBAN\n[3] Delete\n[4] Return\n\n\n",Account->IBan,Account->coin,Account->amount);
 
 }
 
-void editAccountCurrency(){
+void printEditAccountCurrency(){
+    system("clr");
     printf("_*__*__*___*B_A_N_K*__*__*__*__*_\n"
            "Select a currency: \n"
-           "    [E] Euro\n  [U] USD\n   [R] Ron \n"
+           "  [E] Euro\n  [U] USD\n  [R] Ron \n"
            "\n\n\n Type 'back' to return\n");
 
 }
 
 
-void editAccountIBAN() {
+void printEditAccountIBAN() {
+    system("clr");
 
     printf("_*__*__*___*B_A_N_K*__*__*__*__*_\n"
            "Enter 5 capital letters ex: 'XXXXX'\n"
            "\n\n\n"
            "Type 'back' to return\n");
 };
+
+
+
+void printAskReceiverIban(){
+    system("clr");
+    printf("_*__*__*___*B_A_N_K*__*__*__*__*_\n\n"
+           "Enter receiver IBan: \n");
+
+
+}
+

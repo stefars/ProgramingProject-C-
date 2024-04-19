@@ -4,21 +4,23 @@ project(Programing_Project C)
 set(CMAKE_C_STANDARD 23)
 
 add_executable(Programing_Project main.c
-        "Headers/structures.h"
+        "Headers/structures_operations.h"
         "Headers/file_manip.h"
         Headers/UI.h
         Sources/UI.c
         "Sources/file_manip.c"
-        "Sources/strucutres.c"
+        "Sources/structures_operations.c"
         "Headers/struct.h"
         "Headers/generate.h"
         "Sources/generate.c"
-        "Sources/Fetching.c"
-        "Headers/Fetching.h"
-        "Sources/String Operations.c"
-        "Headers/String Operations.h"
-        "Sources/User Input.c"
-        "Headers/User Input.h"
-        "Sources/Main Functions.c"
-        "Headers/Main Functions.h"
+        "Sources/fetching.c"
+        "Headers/fetching.h"
+        "Sources/string_operations.c"
+        "Headers/string_operations.h"
+        "Sources/user_input.c"
+        "Headers/user_input.h"
+        "Sources/main_functions.c"
+        "Headers/main_functions.h"
+        Sources/validators.c
+        Headers/validators.h
 )

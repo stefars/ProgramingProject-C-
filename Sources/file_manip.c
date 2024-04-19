@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "../Headers/structures.h"
+#include "../Headers/structures_operations.h"
 #include "../Headers/generate.h"
 
 
@@ -70,58 +70,6 @@ char *isUserInDb(const char *name,const char *surname){
 
     fclose(file_pointer);
     return NULL;
-
-}
-
-FILE *findUserInDb(const char *name, const char *surname){
-
-    char *to_compare;
-    char *token;
-    char *row;
-    char buffer[CHAR_MAX];
-
-    to_compare = generateUserId(name, surname);
-    token = (char*)malloc(sizeof(char)*(strlen(to_compare)+1));
-
-    if (token == NULL){
-        perror("Not Enough Memory\n");
-        free(to_compare);
-        return 0;
-    }
-
-    FILE *file_pointer;
-    file_pointer = openCsvFile("..\\Data Base\\Users.csv", "r");
-
-
-    while(feof(file_pointer) == 0){
-
-        fgets(buffer,CHAR_MAX,file_pointer);
-
-        row = (char*)malloc(sizeof(char)*strlen(buffer));
-        strcpy(row,buffer);
-
-        token = strtok(buffer,",");
-
-        if (strcmp(token,to_compare) == 0){
-
-            to_compare = NULL;
-            free(to_compare);
-            return file_pointer;
-        }
-
-    }
-
-    to_compare = NULL;
-    token = NULL;
-    row  = NULL;
-
-    free(to_compare);
-    free(token);
-    free(row);
-
-    fclose(file_pointer);
-    return NULL;
-
 
 }
 
@@ -204,9 +152,6 @@ void addUserToDb(struct User* temp){
     fclose(file_pointer);
 
 }
-
-//FILE UPDATE
-
 
 void updateAccountFileOriginal(){
     FILE* file_input;

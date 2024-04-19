@@ -8,7 +8,7 @@
 #include <ctype.h>
 #include "../Headers/file_manip.h"
 #include "../Headers/struct.h"
-#include "../Headers/structures.h"
+#include "../Headers/structures_operations.h"
 
 
 
@@ -107,7 +107,7 @@ struct Session *fetchUserData(char* name,char* surname){
     struct Session *Session;
     char *row;
     char *token;
-    int nr_accounts;
+    short nr_accounts;
     row = isUserInDb(name,surname);
 
     if (row == NULL){

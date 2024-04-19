@@ -19,11 +19,8 @@ void freeUser(struct User *User){
 
 void freeAccount(struct Account *Account){
     free(Account->IBan);
-
     free(Account->id_user);
-
     free(Account->coin);
-
     free(Account);
     Account = NULL;
 
