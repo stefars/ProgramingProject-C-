@@ -142,6 +142,11 @@ void getRowByIban(const char *IBan, char *buffer){
 }
 
 void addAccountToDb(struct Account* temp){
+    if (isIbanInDb(temp->IBan)){
+        printf("Iban already exists\n");
+        return;
+    }
+
     FILE *file_pointer;
     file_pointer = openCsvFile("..\\Data Base\\Accounts.csv", "a");
 
@@ -152,6 +157,8 @@ void addAccountToDb(struct Account* temp){
 }
 
 void addUserToDb(struct User* temp){
+
+
     FILE *file_pointer;
     file_pointer = openCsvFile("..\\Data Base\\Users.csv", "a");
 

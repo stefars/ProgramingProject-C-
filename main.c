@@ -115,11 +115,16 @@ int main() {
 
                                         int index = getAccountByIBAN(input_buffer, option, Session);
 
+                                        if (index == -1){
+
+                                        }
+
                                         if (!strcmp(option, "ERROR") || !strcmp(option, "back"))
                                         {
                                             awaitInput(input_buffer);
                                             continue;
                                         }
+
 
 
                                         while (strcmp(option, "return") != 0) {

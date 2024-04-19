@@ -100,8 +100,13 @@ void addMoney(char *buffer, char *option, struct Session *Session){
     char IBAN[15];
     strcpy(IBAN,option);
 
+    short nr = Session->User->nr_accounts;
     //Find Account Index
-    for(int i = 0; i < Session->User->nr_accounts;i++){
+    for(int i = 0; i <nr ;i++){
+        if (Session->Accounts[i] == NULL){
+            nr++;
+            continue;
+        }
         if(strcmp(Session->Accounts[i]->IBan,IBAN) == 0){
             acc = i;
             break;
