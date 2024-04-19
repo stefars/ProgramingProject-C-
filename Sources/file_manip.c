@@ -305,6 +305,13 @@ void deleteAccount(const char *IBan,struct Account **Account,struct User *User){
     char row[100];
     char *token;
 
+    if(User->nr_accounts == 1){
+        printf("Can not delete your last account.\n");
+        fgets(buffer,150,stdin);
+        return;
+
+    }
+
     file_input = openCsvFile("../Data Base/Accounts.csv","r");
 
     file_output = openCsvFile("../Data Base/Accounts_Temp.csv","w");
