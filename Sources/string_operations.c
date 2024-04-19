@@ -27,10 +27,9 @@ void removeDubSpaces(char *input_buffer){
         prev_char = currentChar;
     }
 
-    // Null-terminate the output string
     input_buffer[pos] = '\0';
 
-    // Trim trailing spaces
+
     while (pos > 0 && isspace(input_buffer[pos - 1])) {
         pos--;
     }

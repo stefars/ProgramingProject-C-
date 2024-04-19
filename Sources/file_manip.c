@@ -327,13 +327,12 @@ void deleteAccount(const char *IBan,struct Account **Account,struct User *User){
     {
         fclose(file_input);
         fclose(file_output);
-        printf("Completed?\n");
+
     }
     else
     {
         fclose(file_input);
         fclose(file_output);
-        printf("Error?\n");
     }
 
     User->nr_accounts--;
@@ -346,10 +345,7 @@ void deleteAccount(const char *IBan,struct Account **Account,struct User *User){
     //MAY CAUSE ERRORS
     freeAccount(*Account);
 
-    printf("%p\n",*Account);
     *Account = NULL;
-    printf("%p\n",*Account);
-
 
 }
 

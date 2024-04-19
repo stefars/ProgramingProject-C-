@@ -394,6 +394,10 @@ void transferMoney(char *buffer,char *option,struct Session *Session){
 
     int acc1 = getAccountByIBAN(buffer,option,Session);
 
+    if(strcmp(option,"back") == 0){
+        return;
+    }
+
     if(strcmp(option,"ERROR")==0){
         return;
     }
@@ -497,6 +501,7 @@ void transferMoney(char *buffer,char *option,struct Session *Session){
         exchangeValue(&amount,*Session->Accounts[acc1]->coin,*temp->coin);
         temp->amount += amount;
 
+        //CRASH POINT (OVERFLOW)
         modifyAccountTempFile(temp,"bluff");
         printf("Hello\n");
         updateAccountFileOriginal();
@@ -564,5 +569,5 @@ void transferMoney(char *buffer,char *option,struct Session *Session){
 
 
 
-//utility?
+
 
