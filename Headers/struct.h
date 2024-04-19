@@ -15,7 +15,7 @@ struct Account {
     char* IBan;
     char* id_user;
     char* coin;
-    unsigned long long amount;
+    long long amount;
 
 };
 

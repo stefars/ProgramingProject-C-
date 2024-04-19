@@ -181,9 +181,10 @@ int main() {
                             case '5':
 
                                 transferMoney(input_buffer,option,Session);
-                                if(strcmp(option,"ERROR") == 0)
+                                if(strcmp(option,"ERROR") == 0) {
+                                    awaitInput(input_buffer);
                                     continue;
-
+                                }
                                 if(strcmp(option,"back") == 0){
                                     break;
                                 }

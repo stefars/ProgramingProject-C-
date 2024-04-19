@@ -488,7 +488,7 @@ void transferMoney(char *buffer,char *option,struct Session *Session){
         }
 
 
-        if(Session->Accounts[acc1]->amount - amount < 0){
+        if(((long long)(Session->Accounts[acc1]->amount) - amount )< 0  ){
             printf("Not enough money in account\n");
             strcpy(option,"ERROR");
             return;
@@ -540,7 +540,8 @@ void transferMoney(char *buffer,char *option,struct Session *Session){
     }
 
 
-    if(Session->Accounts[acc1]->amount - amount < 0){
+    awaitInput(buffer);
+    if(((long long)(Session->Accounts[acc1]->amount - amount) < 0)){
         printf("Not enough money in account\n");
         strcpy(option,"ERROR");
         return;
