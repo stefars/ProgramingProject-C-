@@ -8,14 +8,26 @@
 #include <ctype.h>
 #include <unistd.h>
 
+void awaitInput(char *buffer){
+    fgets(buffer,150,stdin);
+
+}
 
 
 void getCredentials(char *input_buffer,char **name, char **surname, char **opcode){
 
+
     int arguments = 1,buffer_length;
+
 
     buffer_length = strlen(input_buffer);
 
+    if(buffer_length==0){
+
+        *opcode = NULL;
+        return;
+
+    }
     for (int i = 0; i < buffer_length; i++){
 
         if (*(input_buffer+i) == ' ')
@@ -28,7 +40,6 @@ void getCredentials(char *input_buffer,char **name, char **surname, char **opcod
     if(strcmp(*opcode,"exit")==0){
         if (arguments > 1){
             printf("Exit command requires no arguments.\n");
-            sleep(1);
             *opcode = NULL;
             return;
         }
@@ -42,12 +53,10 @@ void getCredentials(char *input_buffer,char **name, char **surname, char **opcod
 
         if(arguments < 3){
             printf("Not enough arguments, 3 needed.\n");
-            sleep(1);
             return;
         }
 
         printf("Too many arguments,only 3 needed.\n");
-        sleep(1);
         return;
 
     }
@@ -75,7 +84,6 @@ void getInput(char *buffer,char *option){
 
     if (buffer_length==0){
         printf("No input detected\n");
-        sleep(1);
         return;
     }
 
@@ -90,12 +98,10 @@ void getInput(char *buffer,char *option){
 
         if(arguments < 1){
             printf("Not enough arguments, 1 needed.\n");
-            sleep(1);
             return;
         }
 
         printf("Too many arguments,only 1 needed.\n");
-        sleep(1);
         return;
     }
 
@@ -103,5 +109,6 @@ void getInput(char *buffer,char *option){
 
 
 }
+
 
 

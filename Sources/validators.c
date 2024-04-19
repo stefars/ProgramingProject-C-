@@ -6,6 +6,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <unistd.h>
+#include "../Headers/user_input.h"
 
 
 #define MAX_NAME 50
@@ -32,7 +33,6 @@ void verifyCredentials(char *name, char *surname, char **opcode){
 
     if ((strcmp(*opcode,"login") != 0) && (strcmp(*opcode,"register") != 0)){
         printf("Invalid command\n");
-        sleep(1);
         *opcode = NULL;
         return;
 
@@ -179,8 +179,6 @@ void validateIBAN(char *option){
         strcpy(option,"ERROR");
         return;
     }
-
-    printf("Validated\n");
 
 }
 

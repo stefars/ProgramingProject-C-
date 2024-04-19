@@ -11,7 +11,7 @@ void printLoginInterface();
 
 void printMenuInterface(const char *name,const char *surname);
 
-void printShowAccountsInterface(struct Session *Session);
+
 
 void printAddAccountInterfaceAsk();
 

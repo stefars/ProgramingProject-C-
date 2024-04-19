@@ -17,25 +17,18 @@ bool isIbanInDb(const char *IBan);
 
 void getRowByIban(const char *IBan, char *buffer);
 
-void addSessionToDb(struct Session* temp);
-
 void addAccountToDb(struct Account* temp);
 
 void addUserToDb(struct User* temp);
 
-
-
-
-
-
-//TEMPORARY STORED HERE
-
-
 void updateAccountFileOriginal();
+
 void modifyAccountTempFile(const struct Account *Account,const char *old_IBAN);
 
 void updateUsersFileOriginal();
+
 void modifyUserTempFile(const struct User *User);
+
 void deleteAccount(const char *IBan,struct Account **Account,struct User *User);
 
 

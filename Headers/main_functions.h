@@ -7,8 +7,9 @@
 
 char loginFunction(char **opcode, char**name, char **surname,char *buffer);
 
-//NOT DONE (IMPLEMENT SESSION UPDATE)
 void addMoney(char *buffer, char *option, struct Session *Session);
+
+void showAccounts(struct Session *Session,char *buffer);
 
 void getChoice(char *buffer, char *option);
 
@@ -16,7 +17,7 @@ void getYesNo(char *buffer, char *option);
 
 void editCurrency(char *buffer,char *option,struct Account *Account);
 
-void addAccount(struct Session *Session);
+void addAccount(struct Session *Session,char *buffer);
 
 void editIBAN(char *buffer, char *option,struct Account *Account);
 

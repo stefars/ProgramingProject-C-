@@ -10,6 +10,8 @@ void getCredentials(char *input_buffer,char **name, char **surname, char **opcod
 
 void getInput(char *buffer,char *option);
 
+void awaitInput(char* buffer);
+
 
 
 #endif //PROGRAMING_PROJECT_USER_INPUT_H

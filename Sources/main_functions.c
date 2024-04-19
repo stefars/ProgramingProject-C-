@@ -18,18 +18,19 @@ char loginFunction(char **opcode, char**name, char **surname,char *buffer){
 
         fgets(buffer, 150, stdin);
 
-        printf("%s\n",buffer);
         removeDubSpaces(buffer);
 
         getCredentials(buffer,name,surname,opcode);
         if(*opcode == NULL){
             printf("Failed argument pass \n");
+            awaitInput(buffer);
             return '9';
         }
 
         verifyCredentials(*name,*surname,opcode);
         if(*opcode == NULL){
             printf("Failed validation pass\n");
+            awaitInput(buffer);
             return '9';
         }
 
@@ -54,6 +55,25 @@ char loginFunction(char **opcode, char**name, char **surname,char *buffer){
 
 }
 
+void showAccounts(struct Session *Session,char *buffer){
+
+    char temp;
+    system("cls");
+    printf("_*__*__*___*B_A_N_K*__*__*__*__*_\n\n"
+    );
+    int nr = Session ->User ->nr_accounts;
+    for (int i = 0; i<nr; i++){
+        if(Session->Accounts[i] == NULL){
+            nr++;
+            continue;}
+        else
+            printf("%s %c %llu\n\n",Session->Accounts[i]->IBan,*Session->Accounts[i]->coin,Session->Accounts[i]->amount);
+
+    }
+
+    awaitInput(buffer);
+}
+
 void addMoney(char *buffer, char *option, struct Session *Session){
 
     printAddMoneyIBanInterface();
@@ -72,6 +92,7 @@ void addMoney(char *buffer, char *option, struct Session *Session){
     }
 
     if(strcmp(option,"ERROR") == 0){
+        awaitInput(buffer);
         return;
     }
 
@@ -90,6 +111,7 @@ void addMoney(char *buffer, char *option, struct Session *Session){
     if (acc == -1){
         printf("Account not owned or does not exist.\n");
         strcpy(option,"ERROR");
+        awaitInput(buffer);
         return;
 
     }
@@ -137,6 +159,7 @@ void getChoice(char *buffer, char *option){
     getInput(buffer,option);
 
     if(strcmp(option,"ERROR")==0){
+        printf("Invalid choice");
         return;
     }
 
@@ -160,7 +183,7 @@ void getYesNo(char *buffer, char *option){
     validateYesNo(option);
 }
 
-void addAccount(struct Session *Session){
+void addAccount(struct Session *Session,char*buffer){
 
     struct Account *New_Account;
 
@@ -176,6 +199,7 @@ void addAccount(struct Session *Session){
     printAddAccountInterface();
 
     printAddAccountInterfaceSuccessful(New_Account);
+    awaitInput(buffer);
 
 }
 
@@ -226,15 +250,21 @@ void editCurrency(char *buffer,char *option,struct Account *Account){
     getInput(buffer,option);
 
     if(strcmp(option,"ERROR")==0){
+        printf("Invalid currency");
+        awaitInput(buffer);
         return;
     }
     if(strcmp(option,"back")==0){
+        printf("Invalid currency");
+        awaitInput(buffer);
         return;
     }
 
 
     if(!(*option == 'E' || *option == 'R' || *option == 'U')){
+        printf("Invalid currency");
         strcpy(option,"ERROR");
+        awaitInput(buffer);
         return;
     }
 
@@ -242,6 +272,8 @@ void editCurrency(char *buffer,char *option,struct Account *Account){
     if (*Account->coin == *option){
         printf("Currency already in use.\n");
         strcpy(option,"ERROR");
+        awaitInput(buffer);
+        return;
 
     }
 
@@ -324,12 +356,17 @@ void editIBAN(char *buffer, char *option,struct Account *Account){
 
 
     if(strcmp(option,"ERROR")==0){
+        printf("Invalid string");
+        awaitInput(buffer);
         return;
     }
 
     validateEditIBAN(option);
 
     if(strcmp(option,"ERROR")==0){
+        printf("Invalid string");
+        awaitInput(buffer);
+
         return;
     }
 

@@ -17,6 +17,14 @@ FILE *openCsvFile(const char *filePath, const char *mode){
 
     FILE* file = NULL;
     file = fopen(filePath,mode);
+
+    if(file == NULL){
+        fopen(filePath,"w");
+        fclose(file);
+    }
+
+    file = fopen(filePath,mode);
+
     return file;
 
 }

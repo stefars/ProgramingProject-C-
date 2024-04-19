@@ -7,6 +7,7 @@
 #include "Headers/generate.h"
 #include "Headers/fetching.h"
 #include "Headers/main_functions.h"
+#include "Headers/user_input.h"
 
 
 
@@ -46,7 +47,9 @@ int main() {
 
                     if (Session == NULL) {
                         printf("User not registered.");
+                        awaitInput(input_buffer);
                         is_running = '0';
+
                         break;
                     }
 
@@ -60,6 +63,7 @@ int main() {
                         getChoice(input_buffer, option);
 
                         if(strcmp(option,"ERROR") == 0){
+                            awaitInput(input_buffer);
                             continue;
                         }
 
@@ -68,7 +72,7 @@ int main() {
 
                             case '1':
 
-                                printShowAccountsInterface(Session);
+                                showAccounts(Session,input_buffer);
                                 break;
 
                             case '2':
@@ -79,24 +83,26 @@ int main() {
 
                                     printAddAccountInterfaceAsk();
 
-                                    // Need Changed;
                                     getYesNo(input_buffer,option);
+
+
 
                                     switch (*option) {
 
                                         case 'Y': {
-                                            addAccount(Session);
+                                            addAccount(Session,input_buffer);
                                             break;
                                         }
 
 
                                         case 'N':
-                                            //UPDATE DATABASE
+
                                             strcpy(option,"back");
                                             break;
 
                                         default:
                                             printf("Invalid Command\n");
+                                            awaitInput(input_buffer);
                                             break;
                                     }
 
@@ -109,19 +115,20 @@ int main() {
 
                                         int index = getAccountByIBAN(input_buffer, option, Session);
 
-                                        if (!strcmp(option, "ERROR") || !strcmp(option, "back")) {
+                                        if (!strcmp(option, "ERROR") || !strcmp(option, "back"))
+                                        {
+                                            awaitInput(input_buffer);
                                             continue;
                                         }
 
 
                                         while (strcmp(option, "return") != 0) {
 
+
                                             printEditAccountMenu(Session->Accounts[index]);
                                             getChoice(input_buffer, option);
 
-                                            if (!strcmp(option, "ERROR") || !strcmp(option, "back")) {
-                                                continue;
-                                            }
+
 
                                             switch (*option) {
                                                 case '1':
@@ -143,10 +150,12 @@ int main() {
 
                                                 default:
                                                     printf("Invalid choice\n");
+                                                    awaitInput(input_buffer);
                                                     break;
                                             }
                                         }
 
+                                        awaitInput(input_buffer);
                                     }
 
 
@@ -191,6 +200,7 @@ int main() {
 
                             default: {
                                 printf("Invalid choice\n");
+                                awaitInput(input_buffer);
                                 break;
                             }
 
@@ -203,16 +213,18 @@ int main() {
                 }
                 case '2': {
 
-                    printf("You are making a new user\n");
 
                     if (isUserInDb(name, surname)) {
                         printf("User already in Data Base!\n");
                         is_running = '0';
+                        awaitInput(input_buffer);
                         break;
 
                     }
 
                     createNewUser(name, surname);
+                    printf("User created!\n");
+                    awaitInput(input_buffer);
                     is_running = '0';
                     break;
                 }
